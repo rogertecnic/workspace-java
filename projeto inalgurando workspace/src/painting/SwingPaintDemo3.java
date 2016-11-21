@@ -1,4 +1,4 @@
-//package painting;
+package painting;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
@@ -15,7 +15,7 @@ import java.awt.event.MouseMotionAdapter;
 
 public class SwingPaintDemo3 {
     
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI(); 
@@ -35,14 +35,14 @@ public class SwingPaintDemo3 {
 }
 
 class MyPanel extends JPanel {
+
     private int squareX = 50;
     private int squareY = 50;
     private int squareW = 20;
     private int squareH = 20;
-    private int realx, realy;
-    
+
     public MyPanel() {
-    	
+
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         addMouseListener(new MouseAdapter() {
@@ -50,17 +50,11 @@ class MyPanel extends JPanel {
                 moveSquare(e.getX(),e.getY());
             }
         });
-        addMouseMotionListener(new MouseAdapter() {
-        	public void mouseMoved(MouseEvent e){
-        		 moveMouse(e.getX(),e.getY());
-        	}
-		});
+
         addMouseMotionListener(new MouseAdapter() {
             public void mouseDragged(MouseEvent e) {
                 moveSquare(e.getX(),e.getY());
-                moveMouse(e.getX(),e.getY());
             }
-            
         });
         
     }
@@ -68,44 +62,25 @@ class MyPanel extends JPanel {
     private void moveSquare(int x, int y) {
         int OFFSET = 1;
         if ((squareX!=x) || (squareY!=y)) {
-        	// repaint old position of square
-        	// executado ao final de todo codigo do frame
             repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
             squareX=x;
             squareY=y;
-			repaint(x,y,squareW+OFFSET,squareH+OFFSET);// renderiza denovo onde o mouse esta
-        }
+            repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+        } 
     }
     
-    private void moveMouse(int x, int y) {
-    	realx = x;
-    	realy = y;
-        repaint(9,9,280,24); // renderiza denovo a area do texto
-    }
-    
-    /**
-     * usado pelo metodo pack() para setar as dimensoes da janela
-     */
-    @Override
+
     public Dimension getPreferredSize() {
         return new Dimension(250,200);
     }
     
-    /**
-     * Metodo que pinta o componente inteiro. no nosso caso o JPanel e tambem escreve
-     * a string na posicao 10,20,
-     * desenha um quadrado vermelho com borda preta na posicao (squareX,squareY, comprimento, largura);
-     */
-    @Override
     protected void paintComponent(Graphics g) {
-    	super.paintComponent(g); 
+        super.paintComponent(g);
         g.drawString("This is my custom Panel! square x,y: ("+squareX+","+squareY+")",10,20);
-        g.drawString("mouse position: ("+realx+","+realy+")",10,30);
+        g.drawString("This is my custom Panel!",10,20);
         g.setColor(Color.RED);
         g.fillRect(squareX,squareY,squareW,squareH);
         g.setColor(Color.BLACK);
         g.drawRect(squareX,squareY,squareW,squareH);
-        //g.drawOval(squareX-15, squareY-15, 30, 30);
-        
     }  
 }
