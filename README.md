@@ -4,6 +4,7 @@ Eclipse Neon 1.a 4.6.1 workspace Java pessoal, todos os meus projetos que nao es
 * dicas:
  * no menu refactor>rename, ao renomear um projeto ele nao renomeia a pasta, para renomear a pasta use refactormove;
  * no menu Windows>show view existe uma window que mostra todas as tags / TODO nos projetos abertos;
+ * instalar o plugin WindowBuilder no eclipse;
  
 * CheckList
 - [ ] Verificar versao do java usado nos projetos do workspace.
