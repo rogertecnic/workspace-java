@@ -71,23 +71,20 @@ public class JanelaRogerioPereira {
 		
 		//frmWindowProgramTest.setBounds((1920-442)/2, (1080-463)/2, 442, 463);
 		frmWindowProgramTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0,0,0};
-		gridBagLayout.rowHeights = new int[]{0,0,0,0};
-		gridBagLayout.columnWeights = new double[]{1.0};
-		gridBagLayout.rowWeights = new double[]{1.0};
-		frmWindowProgramTest.getContentPane().setLayout(gridBagLayout);
+		SpringLayout springLayout = new SpringLayout();
+		frmWindowProgramTest.getContentPane().setLayout(springLayout);
 		
 //		SpringLayout springLayout = new SpringLayout();
 //		frmWindowProgramTest.getContentPane().setLayout(springLayout);
 		
 		JPanel panel_map = new MapaPanel();
-		GridBagConstraints gbc_panel_map = new GridBagConstraints();
-		gbc_panel_map.gridwidth = 3;
-		gbc_panel_map.anchor = GridBagConstraints.NORTHWEST;
-		gbc_panel_map.gridy = 0;
-		gbc_panel_map.gridx = 0;
-		frmWindowProgramTest.getContentPane().add(panel_map, gbc_panel_map);
+		springLayout.putConstraint(SpringLayout.NORTH, panel_map, 80, SpringLayout.NORTH, frmWindowProgramTest.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, panel_map, 95, SpringLayout.WEST, frmWindowProgramTest.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, panel_map, -108, SpringLayout.EAST, frmWindowProgramTest.getContentPane());
+		frmWindowProgramTest.getContentPane().add(panel_map);
+		//springLayout.putConstraint(SpringLayout.NORTH, panel_map, 0, SpringLayout.NORTH, frmWindowProgramTest.getContentPane());
+		//springLayout.putConstraint(SpringLayout.WEST, panel_map, 0, SpringLayout.WEST, frmWindowProgramTest.getContentPane());
+		
 		//		springLayout.putConstraint(SpringLayout.NORTH, panel_map, 10, SpringLayout.NORTH, frmWindowProgramTest.getContentPane());
 		//		springLayout.putConstraint(SpringLayout.WEST, panel_map, 10, SpringLayout.WEST, frmWindowProgramTest.getContentPane());
 		//		springLayout.putConstraint(SpringLayout.SOUTH, panel_map, -172, SpringLayout.SOUTH, frmWindowProgramTest.getContentPane());
@@ -111,7 +108,7 @@ public class JanelaRogerioPereira {
 //		JLabel lblPositionY = new JLabel("position y:" + y);
 //		lblPositionY.setToolTipText("posicao y do cursor dentro do mapa");
 //		panel_mouseXY.add(lblPositionY);
-		frmWindowProgramTest.pack();
+		//frmWindowProgramTest.pack();
 	}
 }
 
@@ -120,8 +117,8 @@ class MapaPanel extends JPanel{
 	protected MapaPanel(){
 		setBackground(Color.red); // branco
 		Dimension dimensao = new Dimension(300, 500);
-		setPreferredSize(dimensao);
-		setMinimumSize(dimensao);
+		//setPreferredSize(dimensao);
+		//setMinimumSize(dimensao);
 		setBorder(BorderFactory.createLineBorder(Color.black, 3));
 	}
 	

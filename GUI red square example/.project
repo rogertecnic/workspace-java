@@ -3,6 +3,7 @@
 	<name>GUI red square example</name>
 	<comment></comment>
 	<projects>
+		<project>EV3 Sek Software Pequi Monitor</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
