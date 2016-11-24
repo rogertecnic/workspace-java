@@ -12,7 +12,7 @@ public class JP2 extends JPanel {
 	public JP2() {
 		
 		JTextArea txtrTextArea = new JTextArea();
-		txtrTextArea.setText("JP2 texto");
+		txtrTextArea.setText("enviar comando:");
 		add(txtrTextArea);
 
 	}
