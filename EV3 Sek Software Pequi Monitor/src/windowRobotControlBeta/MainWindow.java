@@ -27,7 +27,6 @@ public class MainWindow {
 	private void createAndShowGUI() {
 		System.out.println("Created GUI on EDT? "+
 				SwingUtilities.isEventDispatchThread());
-		//TODO criar a JFrame do window e os demais componentes
 		JFrame jFrame = new JFrame("Windows monitor robot " + robotName);
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();

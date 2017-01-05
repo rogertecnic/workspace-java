@@ -14,7 +14,6 @@ public class MyJPanel extends JPanel {
 		//setPreferredSize(dimensao);
 		//setMinimumSize(dimensao);
 		setBorder(BorderFactory.createLineBorder(Color.black, 3));
-		// TODO criar os JPanel
 	}
 
 }
