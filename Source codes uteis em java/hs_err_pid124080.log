@@ -1,0 +1,430 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000005b205b00, pid=124080, tid=0x0000000000014168
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_112-b15) (build 1.8.0_112-b15)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.112-b15 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# C  [rxtxSerial.dll+0x5b00]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000006dc50f800):  JavaThread "ThreadLeitura" daemon [_thread_in_native, id=82280, stack(0x0000000715c00000,0x0000000715d00000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000011dfef88
+
+Registers:
+RAX=0x0000000000000001, RBX=0x0000000000000000, RCX=0x000000005b21d4d5, RDX=0xfffffffffffff665
+RSP=0x0000000715cff1f0, RBP=0x00000000ffffffff, RSI=0x0000000000000000, RDI=0x00000006dc50f9f8
+R8 =0x0000000000000002, R9 =0xfffffffffffff63c, R10=0x000000000000002c, R11=0x8101010101010100
+R12=0x0000000011dfef80, R13=0x0000000000000001, R14=0x0000000715cff390, R15=0x0000000000000000
+RIP=0x000000005b205b00, EFLAGS=0x0000000000010202
+
+Top of Stack: (sp=0x0000000715cff1f0)
+0x0000000715cff1f0:   0000000000000000 0000000000000000
+0x0000000715cff200:   0000000715cff390 0000000000000000
+0x0000000715cff210:   00000006dc50f800 0000000715cff390
+0x0000000715cff220:   000000001784bd10 0000000715cff390
+0x0000000715cff230:   ffffffffffffffff 0000000000000001
+0x0000000715cff240:   00000006dc4dc148 000000005b205f3f
+0x0000000715cff250:   00000006dc50f9f8 00000006dc50f9f8
+0x0000000715cff260:   0000000600000001 0000000715cff280
+0x0000000715cff270:   0000000600000001 00000000ffffffff
+0x0000000715cff280:   0000000715cff778 0000000715cff390
+0x0000000715cff290:   000000001784bd18 000000005b5fcac4
+0x0000000715cff2a0:   000000001784bd18 00000006dc50f800
+0x0000000715cff2b0:   000000001784bd18 00000006dc50f800
+0x0000000715cff2c0:   00000007162f06c0 0000000002e277c6
+0x0000000715cff2d0:   00007cd7b38a2ba4 00000006dc50f800
+0x0000000715cff2e0:   0000000000000000 00000007162f06c0 
+
+Instructions: (pc=0x000000005b205b00)
+0x000000005b205ae0:   15 23 7a 01 00 48 8d 48 60 e8 3a 5d 00 00 4c 8b
+0x000000005b205af0:   e5 8b ac 24 88 00 00 00 44 8b ac 24 80 00 00 00
+0x000000005b205b00:   45 8b 74 24 08 41 89 5c 24 08 41 8b fd 85 ed 78
+0x000000005b205b10:   09 ff 15 e9 14 01 00 44 8b f8 45 85 ed 7e 4a 90 
+
+
+Register to memory mapping:
+
+RAX=0x0000000000000001 is an unknown value
+RBX=0x0000000000000000 is an unknown value
+RCX=0x000000005b21d4d5 is an unknown value
+RDX=0xfffffffffffff665 is an unknown value
+RSP=0x0000000715cff1f0 is pointing into the stack for thread: 0x00000006dc50f800
+RBP=0x00000000ffffffff is an unallocated location in the heap
+RSI=0x0000000000000000 is an unknown value
+RDI=0x00000006dc50f9f8 is an unknown value
+R8 =0x0000000000000002 is an unknown value
+R9 =0xfffffffffffff63c is an unknown value
+R10=0x000000000000002c is an unknown value
+R11=0x8101010101010100 is an unknown value
+R12=0x0000000011dfef80 is an unknown value
+R13=0x0000000000000001 is an unknown value
+R14=0x0000000715cff390 is pointing into the stack for thread: 0x00000006dc50f800
+R15=0x0000000000000000 is an unknown value
+
+
+Stack: [0x0000000715c00000,0x0000000715d00000],  sp=0x0000000715cff1f0,  free space=1020k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [rxtxSerial.dll+0x5b00]
+C  [rxtxSerial.dll+0x5f3f]
+C  0x0000000002e27934
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  gnu.io.RXTXPort.readByte()I+0
+j  gnu.io.RXTXPort$SerialInputStream.read()I+81
+j  com_serial_arduino_usb.ThreadLeitura.realizaLeitura()V+14
+j  com_serial_arduino_usb.ThreadLeitura.run()V+1
+j  java.lang.Thread.run()V+11
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00000006dc510000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82284, stack(0x0000000715d00000,0x0000000715e00000)]
+=>0x00000006dc50f800 JavaThread "ThreadLeitura" daemon [_thread_in_native, id=82280, stack(0x0000000715c00000,0x0000000715d00000)]
+  0x00000006dc511000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82276, stack(0x0000000715b00000,0x0000000715c00000)]
+  0x00000006dc50e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82272, stack(0x0000000715a00000,0x0000000715b00000)]
+  0x00000006dc50d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82268, stack(0x0000000715900000,0x0000000715a00000)]
+  0x00000006dc514000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82264, stack(0x0000000715800000,0x0000000715900000)]
+  0x00000006dc50c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82260, stack(0x0000000715700000,0x0000000715800000)]
+  0x00000006dc513000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82256, stack(0x0000000715600000,0x0000000715700000)]
+  0x00000006dc512800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82252, stack(0x0000000715500000,0x0000000715600000)]
+  0x00000006dc505000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82248, stack(0x0000000715400000,0x0000000715500000)]
+  0x00000006dc50b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82244, stack(0x0000000715300000,0x0000000715400000)]
+  0x00000006dc50b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82240, stack(0x0000000715200000,0x0000000715300000)]
+  0x00000006dc50a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82236, stack(0x0000000715100000,0x0000000715200000)]
+  0x00000006dc502800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82232, stack(0x0000000715000000,0x0000000715100000)]
+  0x00000006dc509800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82228, stack(0x0000000714f00000,0x0000000715000000)]
+  0x00000006dc508800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82224, stack(0x0000000714e00000,0x0000000714f00000)]
+  0x00000006dc503800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82220, stack(0x0000000714d00000,0x0000000714e00000)]
+  0x00000006dc504000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82216, stack(0x0000000714c00000,0x0000000714d00000)]
+  0x00000006dc501000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82212, stack(0x0000000714b00000,0x0000000714c00000)]
+  0x00000006dc508000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82208, stack(0x0000000714a00000,0x0000000714b00000)]
+  0x00000006dc507000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82204, stack(0x0000000714900000,0x0000000714a00000)]
+  0x00000006dc505800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82200, stack(0x0000000714800000,0x0000000714900000)]
+  0x00000006dc506800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82196, stack(0x0000000714700000,0x0000000714800000)]
+  0x00000006dc502000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82192, stack(0x0000000714600000,0x0000000714700000)]
+  0x00000006dc423000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82188, stack(0x0000000714500000,0x0000000714600000)]
+  0x00000006dc422800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82184, stack(0x0000000714400000,0x0000000714500000)]
+  0x00000006dc424000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82180, stack(0x0000000714300000,0x0000000714400000)]
+  0x00000006dc421800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82176, stack(0x0000000714200000,0x0000000714300000)]
+  0x00000006dc421000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82172, stack(0x0000000714100000,0x0000000714200000)]
+  0x00000006dc419000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82168, stack(0x0000000714000000,0x0000000714100000)]
+  0x00000006dc420000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82164, stack(0x0000000713f00000,0x0000000714000000)]
+  0x00000006dc418800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82160, stack(0x0000000713e00000,0x0000000713f00000)]
+  0x00000006dc41f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82156, stack(0x0000000713d00000,0x0000000713e00000)]
+  0x00000006dc41e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82152, stack(0x0000000713c00000,0x0000000713d00000)]
+  0x00000006dc41d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82148, stack(0x0000000713b00000,0x0000000713c00000)]
+  0x00000006dc41d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82144, stack(0x0000000713a00000,0x0000000713b00000)]
+  0x00000006dc41c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82140, stack(0x0000000713900000,0x0000000713a00000)]
+  0x00000006dc41b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82136, stack(0x0000000713800000,0x0000000713900000)]
+  0x00000006dc41a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82132, stack(0x0000000713700000,0x0000000713800000)]
+  0x00000006dc41a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82128, stack(0x0000000713600000,0x0000000713700000)]
+  0x00000006dc411000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82124, stack(0x0000000713500000,0x0000000713600000)]
+  0x00000006dc417800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82120, stack(0x0000000713400000,0x0000000713500000)]
+  0x00000006dc414000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82116, stack(0x0000000713300000,0x0000000713400000)]
+  0x00000006dc411800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82112, stack(0x0000000713200000,0x0000000713300000)]
+  0x00000006dc413000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82108, stack(0x0000000713100000,0x0000000713200000)]
+  0x00000006dc410000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82104, stack(0x0000000713000000,0x0000000713100000)]
+  0x00000006dc412800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82100, stack(0x0000000712f00000,0x0000000713000000)]
+  0x00000006dc415800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82096, stack(0x0000000712e00000,0x0000000712f00000)]
+  0x00000006dc417000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82092, stack(0x0000000712d00000,0x0000000712e00000)]
+  0x00000006dc40f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82088, stack(0x0000000712c00000,0x0000000712d00000)]
+  0x00000006dc414800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82084, stack(0x0000000712b00000,0x0000000712c00000)]
+  0x00000006dc416000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82080, stack(0x0000000712a00000,0x0000000712b00000)]
+  0x00000006dc408000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82076, stack(0x0000000712900000,0x0000000712a00000)]
+  0x00000006dc40e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82072, stack(0x0000000712800000,0x0000000712900000)]
+  0x00000006dc407000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82068, stack(0x0000000712700000,0x0000000712800000)]
+  0x00000006dc40e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82064, stack(0x0000000712600000,0x0000000712700000)]
+  0x00000006dc40d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82060, stack(0x0000000712500000,0x0000000712600000)]
+  0x00000006dc408800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82056, stack(0x0000000712400000,0x0000000712500000)]
+  0x00000006dc405800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82052, stack(0x0000000712300000,0x0000000712400000)]
+  0x00000006dc40c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82048, stack(0x0000000712200000,0x0000000712300000)]
+  0x00000006dc40b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82044, stack(0x0000000712100000,0x0000000712200000)]
+  0x00000006dc409800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82040, stack(0x0000000712000000,0x0000000712100000)]
+  0x00000006dc406800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82036, stack(0x0000000711f00000,0x0000000712000000)]
+  0x00000006dc405000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82032, stack(0x0000000711e00000,0x0000000711f00000)]
+  0x00000006dc404000 JavaThread "Thread-0" daemon [_thread_in_native, id=82028, stack(0x0000000711d00000,0x0000000711e00000)]
+  0x00000006dc40b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82024, stack(0x0000000711c00000,0x0000000711d00000)]
+  0x00000006dc40a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82020, stack(0x0000000711b00000,0x0000000711c00000)]
+  0x00000006dc3fc800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82016, stack(0x0000000711a00000,0x0000000711b00000)]
+  0x00000006dc3ff000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82012, stack(0x0000000711900000,0x0000000711a00000)]
+  0x00000006dc402800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82008, stack(0x0000000711800000,0x0000000711900000)]
+  0x00000006dc401000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82004, stack(0x0000000711700000,0x0000000711800000)]
+  0x00000006dc3fd800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=82000, stack(0x0000000711600000,0x0000000711700000)]
+  0x00000006dc3fe000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81996, stack(0x0000000711500000,0x0000000711600000)]
+  0x00000006dc403800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81992, stack(0x0000000711400000,0x0000000711500000)]
+  0x00000006dc3fc000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81988, stack(0x0000000711300000,0x0000000711400000)]
+  0x00000006dc402000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81984, stack(0x0000000711200000,0x0000000711300000)]
+  0x00000006dc400800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81980, stack(0x0000000711100000,0x0000000711200000)]
+  0x00000006dc3ff800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81976, stack(0x0000000711000000,0x0000000711100000)]
+  0x00000006dc3f6800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81972, stack(0x0000000710f00000,0x0000000711000000)]
+  0x00000006dc3f4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81968, stack(0x0000000710e00000,0x0000000710f00000)]
+  0x00000006dc3f9000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81964, stack(0x0000000710d00000,0x0000000710e00000)]
+  0x00000006dc3f6000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81960, stack(0x0000000710c00000,0x0000000710d00000)]
+  0x00000006dc3f8000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81956, stack(0x0000000710b00000,0x0000000710c00000)]
+  0x00000006dc3f5000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81952, stack(0x0000000710a00000,0x0000000710b00000)]
+  0x00000006dc3f7800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81948, stack(0x0000000710900000,0x0000000710a00000)]
+  0x00000006dc3fb000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81944, stack(0x0000000710800000,0x0000000710900000)]
+  0x00000006dc3f9800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81940, stack(0x0000000710700000,0x0000000710800000)]
+  0x00000006dc3fa800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81936, stack(0x0000000710600000,0x0000000710700000)]
+  0x00000006dc42f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81932, stack(0x0000000710500000,0x0000000710600000)]
+  0x00000006dc42d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81928, stack(0x0000000710400000,0x0000000710500000)]
+  0x00000006dc434800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81924, stack(0x0000000710300000,0x0000000710400000)]
+  0x00000006dc433800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81916, stack(0x0000000710200000,0x0000000710300000)]
+  0x00000006dc42d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81912, stack(0x0000000710100000,0x0000000710200000)]
+  0x00000006dc432000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81908, stack(0x0000000710000000,0x0000000710100000)]
+  0x00000006dc42e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81904, stack(0x000000070ff00000,0x0000000710000000)]
+  0x00000006dc431800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81900, stack(0x000000070fe00000,0x000000070ff00000)]
+  0x00000006dc430800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81896, stack(0x000000070fd00000,0x000000070fe00000)]
+  0x00000006dc42c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81892, stack(0x000000070fc00000,0x000000070fd00000)]
+  0x00000006dc430000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81888, stack(0x000000070fb00000,0x000000070fc00000)]
+  0x00000006dc433000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81884, stack(0x000000070fa00000,0x000000070fb00000)]
+  0x00000006dc424800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81880, stack(0x000000070f900000,0x000000070fa00000)]
+  0x00000006dc42a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81876, stack(0x000000070f800000,0x000000070f900000)]
+  0x00000006dc427800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81872, stack(0x000000070f700000,0x000000070f800000)]
+  0x00000006dc427000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81868, stack(0x000000070f600000,0x000000070f700000)]
+  0x00000006dc428800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81864, stack(0x000000070f500000,0x000000070f600000)]
+  0x00000006dc42a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81860, stack(0x000000070f400000,0x000000070f500000)]
+  0x00000006dc429000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81856, stack(0x000000070f300000,0x000000070f400000)]
+  0x00000006dc426000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81852, stack(0x000000070f200000,0x000000070f300000)]
+  0x00000006dc425800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81848, stack(0x000000070f100000,0x000000070f200000)]
+  0x00000006dc42b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81844, stack(0x000000070f000000,0x000000070f100000)]
+  0x00000006dc3aa800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81840, stack(0x000000070ef00000,0x000000070f000000)]
+  0x00000006dc3a9800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81836, stack(0x000000070ee00000,0x000000070ef00000)]
+  0x00000006dc3a8000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81832, stack(0x000000070ed00000,0x000000070ee00000)]
+  0x00000006dc3a7800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81828, stack(0x000000070ec00000,0x000000070ed00000)]
+  0x00000006dc3a9000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81824, stack(0x000000070eb00000,0x000000070ec00000)]
+  0x00000006dc3a6800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81820, stack(0x000000070ea00000,0x000000070eb00000)]
+  0x00000006dc3a0000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81816, stack(0x000000070e900000,0x000000070ea00000)]
+  0x00000006dc3a6000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81812, stack(0x000000070e800000,0x000000070e900000)]
+  0x00000006dc39e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81808, stack(0x000000070e700000,0x000000070e800000)]
+  0x00000006dc3a5000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81804, stack(0x000000070e600000,0x000000070e700000)]
+  0x00000006dc3a3800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81800, stack(0x000000070e500000,0x000000070e600000)]
+  0x00000006dc3a4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81796, stack(0x000000070e400000,0x000000070e500000)]
+  0x00000006dc39c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81792, stack(0x000000070e300000,0x000000070e400000)]
+  0x00000006dc3a3000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81788, stack(0x000000070e200000,0x000000070e300000)]
+  0x00000006dc39b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81784, stack(0x000000070e100000,0x000000070e200000)]
+  0x00000006dc39d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81780, stack(0x000000070e000000,0x000000070e100000)]
+  0x00000006dc39f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81776, stack(0x000000070df00000,0x000000070e000000)]
+  0x00000006dc3a2000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81772, stack(0x000000070de00000,0x000000070df00000)]
+  0x00000006dc3a1800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81768, stack(0x000000070dd00000,0x000000070de00000)]
+  0x00000006dc39d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81764, stack(0x000000070dc00000,0x000000070dd00000)]
+  0x00000006dc39a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81760, stack(0x000000070db00000,0x000000070dc00000)]
+  0x00000006dc3a0800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81756, stack(0x000000070da00000,0x000000070db00000)]
+  0x00000006dc395000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81752, stack(0x000000070d900000,0x000000070da00000)]
+  0x00000006dc394800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81748, stack(0x000000070d800000,0x000000070d900000)]
+  0x00000006dc393800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81744, stack(0x000000070d700000,0x000000070d800000)]
+  0x00000006dc39a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81740, stack(0x000000070d600000,0x000000070d700000)]
+  0x00000006dc392000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81736, stack(0x000000070d500000,0x000000070d600000)]
+  0x00000006dc398800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81732, stack(0x000000070d400000,0x000000070d500000)]
+  0x00000006dc399000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81728, stack(0x000000070d300000,0x000000070d400000)]
+  0x00000006dc397800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81724, stack(0x000000070d200000,0x000000070d300000)]
+  0x00000006dc397000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81720, stack(0x000000070d100000,0x000000070d200000)]
+  0x00000006dc391800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81716, stack(0x000000070d000000,0x000000070d100000)]
+  0x00000006dc393000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81712, stack(0x000000070cf00000,0x000000070d000000)]
+  0x00000006dc396000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81708, stack(0x000000070ce00000,0x000000070cf00000)]
+  0x00000006dc390000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81704, stack(0x000000070cd00000,0x000000070ce00000)]
+  0x00000006dc390800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81700, stack(0x000000070cc00000,0x000000070cd00000)]
+  0x00000006dc388800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81696, stack(0x000000070cb00000,0x000000070cc00000)]
+  0x00000006dc38f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81692, stack(0x000000070ca00000,0x000000070cb00000)]
+  0x00000006dc38d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81688, stack(0x000000070c900000,0x000000070ca00000)]
+  0x00000006dc38e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81684, stack(0x000000070c800000,0x000000070c900000)]
+  0x00000006dc389000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81680, stack(0x000000070c700000,0x000000070c800000)]
+  0x00000006dc387000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81676, stack(0x000000070c600000,0x000000070c700000)]
+  0x00000006dc387800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81672, stack(0x000000070c500000,0x000000070c600000)]
+  0x00000006dc386000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81668, stack(0x000000070c400000,0x000000070c500000)]
+  0x00000006dc38b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81664, stack(0x000000070c300000,0x000000070c400000)]
+  0x00000006dc38a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81660, stack(0x000000070c200000,0x000000070c300000)]
+  0x00000006dc38a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81656, stack(0x000000070c100000,0x000000070c200000)]
+  0x00000006dc38d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81652, stack(0x000000070c000000,0x000000070c100000)]
+  0x00000006dc38c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81648, stack(0x000000070bf00000,0x000000070c000000)]
+  0x00000006dc37e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81644, stack(0x000000070be00000,0x000000070bf00000)]
+  0x00000006dc385800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81640, stack(0x000000070bd00000,0x000000070be00000)]
+  0x00000006dc37e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81636, stack(0x000000070bc00000,0x000000070bd00000)]
+  0x00000006dc384800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81632, stack(0x000000070bb00000,0x000000070bc00000)]
+  0x00000006dc37d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81628, stack(0x000000070ba00000,0x000000070bb00000)]
+  0x00000006dc384000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81624, stack(0x000000070b900000,0x000000070ba00000)]
+  0x00000006dc383000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81620, stack(0x000000070b800000,0x000000070b900000)]
+  0x00000006dc382800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81616, stack(0x000000070b700000,0x000000070b800000)]
+  0x00000006dc381800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81612, stack(0x000000070b600000,0x000000070b700000)]
+  0x00000006dc37c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81608, stack(0x000000070b500000,0x000000070b600000)]
+  0x00000006dc380000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81604, stack(0x000000070b400000,0x000000070b500000)]
+  0x00000006dc381000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81600, stack(0x000000070b300000,0x000000070b400000)]
+  0x00000006dc37f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81596, stack(0x000000070b200000,0x000000070b300000)]
+  0x00000006dc37b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81592, stack(0x000000070b100000,0x000000070b200000)]
+  0x00000006dc374000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81588, stack(0x000000070b000000,0x000000070b100000)]
+  0x00000006dc37b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81584, stack(0x000000070af00000,0x000000070b000000)]
+  0x00000006dc373800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81580, stack(0x000000070ae00000,0x000000070af00000)]
+  0x00000006dc37a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81576, stack(0x000000070ad00000,0x000000070ae00000)]
+  0x00000006dc372800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81572, stack(0x000000070ac00000,0x000000070ad00000)]
+  0x00000006dc379800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81568, stack(0x000000070ab00000,0x000000070ac00000)]
+  0x00000006dc378800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81564, stack(0x000000070aa00000,0x000000070ab00000)]
+  0x00000006dc378000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81560, stack(0x000000070a900000,0x000000070aa00000)]
+  0x00000006dc377000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81556, stack(0x000000070a800000,0x000000070a900000)]
+  0x00000006dc372000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81552, stack(0x000000070a700000,0x000000070a800000)]
+  0x00000006dc375800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81548, stack(0x000000070a600000,0x000000070a700000)]
+  0x00000006dc376800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81544, stack(0x000000070a500000,0x000000070a600000)]
+  0x00000006dc375000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81540, stack(0x000000070a400000,0x000000070a500000)]
+  0x00000006dc36a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81536, stack(0x000000070a300000,0x000000070a400000)]
+  0x00000006dc36f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81532, stack(0x000000070a200000,0x000000070a300000)]
+  0x00000006dc36f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81528, stack(0x000000070a100000,0x000000070a200000)]
+  0x00000006dc370800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81524, stack(0x000000070a000000,0x000000070a100000)]
+  0x00000006dc36e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81520, stack(0x0000000709f00000,0x000000070a000000)]
+  0x00000006dc36d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81516, stack(0x0000000709e00000,0x0000000709f00000)]
+  0x00000006dc36c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81512, stack(0x0000000709d00000,0x0000000709e00000)]
+  0x00000006dc371000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81508, stack(0x0000000709c00000,0x0000000709d00000)]
+  0x00000006dc36b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81504, stack(0x0000000709b00000,0x0000000709c00000)]
+  0x00000006dc36c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81500, stack(0x0000000709a00000,0x0000000709b00000)]
+  0x00000006dc2d4000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81496, stack(0x0000000709900000,0x0000000709a00000)]
+  0x00000006dc2d3000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81492, stack(0x0000000709800000,0x0000000709900000)]
+  0x00000006dc2d2800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81488, stack(0x0000000709700000,0x0000000709800000)]
+  0x00000006dc2d1800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81484, stack(0x0000000709600000,0x0000000709700000)]
+  0x00000006dc2d1000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81480, stack(0x0000000709500000,0x0000000709600000)]
+  0x00000006dc2c9000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81476, stack(0x0000000709400000,0x0000000709500000)]
+  0x00000006dc2cf000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81472, stack(0x0000000709300000,0x0000000709400000)]
+  0x00000006dc2ce800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81468, stack(0x0000000709200000,0x0000000709300000)]
+  0x00000006dc2cd800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81464, stack(0x0000000709100000,0x0000000709200000)]
+  0x00000006dc2cd000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81460, stack(0x0000000709000000,0x0000000709100000)]
+  0x00000006dc2ca800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81456, stack(0x0000000708f00000,0x0000000709000000)]
+  0x00000006dc2ca000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81452, stack(0x0000000708e00000,0x0000000708f00000)]
+  0x00000006dc2cc000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81448, stack(0x0000000708d00000,0x0000000708e00000)]
+  0x00000006dc2d0000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81444, stack(0x0000000708c00000,0x0000000708d00000)]
+  0x00000006dc2cb800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81440, stack(0x0000000708b00000,0x0000000708c00000)]
+  0x00000006dc2c1800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81436, stack(0x0000000708a00000,0x0000000708b00000)]
+  0x00000006dc2c8800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81432, stack(0x0000000708900000,0x0000000708a00000)]
+  0x00000006dc2c1000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81428, stack(0x0000000708800000,0x0000000708900000)]
+  0x00000006dc2c7800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81424, stack(0x0000000708700000,0x0000000708800000)]
+  0x00000006dc2c5800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81420, stack(0x0000000708600000,0x0000000708700000)]
+  0x00000006dc2c7000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81416, stack(0x0000000708500000,0x0000000708600000)]
+  0x00000006dc2c6000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81412, stack(0x0000000708400000,0x0000000708500000)]
+  0x00000006dc2be800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81408, stack(0x0000000708300000,0x0000000708400000)]
+  0x00000006dc2be000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81404, stack(0x0000000708200000,0x0000000708300000)]
+  0x00000006dc2c4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81400, stack(0x0000000708100000,0x0000000708200000)]
+  0x00000006dc2c3000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81396, stack(0x0000000708000000,0x0000000708100000)]
+  0x00000006dc2c4000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81392, stack(0x0000000707c30000,0x0000000707d30000)]
+  0x00000006dc2bf800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81388, stack(0x0000000707b30000,0x0000000707c30000)]
+  0x00000006dc2c0000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81384, stack(0x0000000707a30000,0x0000000707b30000)]
+  0x00000006dc2c2800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81380, stack(0x0000000707930000,0x0000000707a30000)]
+  0x00000006dc2bb000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81376, stack(0x0000000707830000,0x0000000707930000)]
+  0x00000006dc2bd000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81372, stack(0x0000000707730000,0x0000000707830000)]
+  0x00000006dc2bb800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81368, stack(0x0000000707630000,0x0000000707730000)]
+  0x00000006dc2ba000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81364, stack(0x0000000707530000,0x0000000707630000)]
+  0x00000006dc2bc800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81360, stack(0x0000000707430000,0x0000000707530000)]
+  0x00000006dc2b9800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81356, stack(0x0000000707330000,0x0000000707430000)]
+  0x00000006dc2b2800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81352, stack(0x0000000707230000,0x0000000707330000)]
+  0x00000006dc2b8000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81348, stack(0x0000000707130000,0x0000000707230000)]
+  0x00000006dc2b8800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81344, stack(0x0000000707030000,0x0000000707130000)]
+  0x00000006dc2b2000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81340, stack(0x0000000706f30000,0x0000000707030000)]
+  0x00000006dc2b7000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81336, stack(0x0000000706e30000,0x0000000706f30000)]
+  0x00000006dc2b4000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81332, stack(0x0000000706d30000,0x0000000706e30000)]
+  0x00000006dc2b5800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81328, stack(0x0000000706c30000,0x0000000706d30000)]
+  0x00000006dc2b6800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81324, stack(0x0000000706b30000,0x0000000706c30000)]
+  0x00000006dc2b3800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81320, stack(0x0000000706a30000,0x0000000706b30000)]
+  0x00000006dc2b5000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81316, stack(0x0000000706930000,0x0000000706a30000)]
+  0x00000006dc2aa800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81312, stack(0x0000000706830000,0x0000000706930000)]
+  0x00000006dc2b1000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81308, stack(0x0000000706730000,0x0000000706830000)]
+  0x00000006dc2a9800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81304, stack(0x0000000706630000,0x0000000706730000)]
+  0x00000006dc2b0800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81300, stack(0x0000000706530000,0x0000000706630000)]
+  0x00000006dc2af000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81296, stack(0x0000000706430000,0x0000000706530000)]
+  0x00000006dc2ae000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81292, stack(0x0000000706330000,0x0000000706430000)]
+  0x00000006dc2af800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81288, stack(0x0000000706230000,0x0000000706330000)]
+  0x00000006dc2a7800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81284, stack(0x0000000706130000,0x0000000706230000)]
+  0x00000006dc2a6800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81280, stack(0x0000000706030000,0x0000000706130000)]
+  0x00000006dc2ad800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81276, stack(0x0000000705f30000,0x0000000706030000)]
+  0x00000006dc2a9000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81272, stack(0x0000000705e30000,0x0000000705f30000)]
+  0x00000006dc2a6000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81268, stack(0x0000000705d30000,0x0000000705e30000)]
+  0x00000006dc2ab000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81264, stack(0x0000000705c30000,0x0000000705d30000)]
+  0x00000006dc2ac800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81260, stack(0x0000000705b30000,0x0000000705c30000)]
+  0x00000006dc2a5000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81256, stack(0x0000000705a30000,0x0000000705b30000)]
+  0x00000006dc2a8000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81252, stack(0x0000000705930000,0x0000000705a30000)]
+  0x00000006dc2ac000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81248, stack(0x0000000705830000,0x0000000705930000)]
+  0x00000006dc2a4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81244, stack(0x0000000705730000,0x0000000705830000)]
+  0x00000006dc2df000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81240, stack(0x0000000705630000,0x0000000705730000)]
+  0x00000006dc2e4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81236, stack(0x0000000705530000,0x0000000705630000)]
+  0x00000006dc2e2000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81232, stack(0x0000000705430000,0x0000000705530000)]
+  0x00000006dc2e0800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81228, stack(0x0000000705330000,0x0000000705430000)]
+  0x00000006dc2e1800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81224, stack(0x0000000705230000,0x0000000705330000)]
+  0x00000006dc2e3800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81220, stack(0x0000000705130000,0x0000000705230000)]
+  0x00000006dc2de800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81216, stack(0x0000000705030000,0x0000000705130000)]
+  0x00000006dc2e3000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81212, stack(0x0000000704f30000,0x0000000705030000)]
+  0x00000006dc2e0000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81208, stack(0x0000000704e30000,0x0000000704f30000)]
+  0x00000006dc2d7000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81204, stack(0x0000000704d30000,0x0000000704e30000)]
+  0x00000006dc2d7800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81200, stack(0x0000000704c30000,0x0000000704d30000)]
+  0x00000006dc2dd800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81196, stack(0x0000000704b30000,0x0000000704c30000)]
+  0x00000006dc2dd000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81192, stack(0x0000000704a30000,0x0000000704b30000)]
+  0x00000006dc2d5800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81188, stack(0x0000000704930000,0x0000000704a30000)]
+  0x00000006dc2dc000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81184, stack(0x0000000704830000,0x0000000704930000)]
+  0x00000006dc2d4800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81180, stack(0x0000000704730000,0x0000000704830000)]
+  0x00000006dc2db800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81176, stack(0x0000000704630000,0x0000000704730000)]
+  0x00000006dc2d6000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81172, stack(0x0000000704530000,0x0000000704630000)]
+  0x00000006dc2da000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81168, stack(0x0000000704430000,0x0000000704530000)]
+  0x00000006dc2d9000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81164, stack(0x0000000704330000,0x0000000704430000)]
+  0x00000006dc2d8800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81160, stack(0x0000000704230000,0x0000000704330000)]
+  0x00000006dc2da800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81156, stack(0x0000000704130000,0x0000000704230000)]
+  0x00000006dc2a0000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81152, stack(0x0000000704030000,0x0000000704130000)]
+  0x00000006dc29f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81148, stack(0x0000000703f30000,0x0000000704030000)]
+  0x00000006dc29e800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81144, stack(0x0000000703e30000,0x0000000703f30000)]
+  0x00000006dc2a1800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81140, stack(0x0000000703d30000,0x0000000703e30000)]
+  0x00000006dc2a1000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81136, stack(0x0000000703c30000,0x0000000703d30000)]
+  0x00000006dc29e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81132, stack(0x0000000703b30000,0x0000000703c30000)]
+  0x00000006dc2a2800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81128, stack(0x0000000703a30000,0x0000000703b30000)]
+  0x00000006dc296800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81124, stack(0x0000000703930000,0x0000000703a30000)]
+  0x00000006dc29d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81120, stack(0x0000000703830000,0x0000000703930000)]
+  0x00000006dc297000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81116, stack(0x0000000703730000,0x0000000703830000)]
+  0x00000006dc29c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81112, stack(0x0000000703630000,0x0000000703730000)]
+  0x00000006dc29b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81108, stack(0x0000000703530000,0x0000000703630000)]
+  0x00000006dc295800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81104, stack(0x0000000703430000,0x0000000703530000)]
+  0x00000006dc294000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81100, stack(0x0000000703330000,0x0000000703430000)]
+  0x00000006dc29b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81096, stack(0x0000000703230000,0x0000000703330000)]
+  0x00000006dc293800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81092, stack(0x0000000703130000,0x0000000703230000)]
+  0x00000006dc29a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81088, stack(0x0000000703030000,0x0000000703130000)]
+  0x00000006dc292800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81084, stack(0x0000000702f30000,0x0000000703030000)]
+  0x00000006dc299800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81080, stack(0x0000000702e30000,0x0000000702f30000)]
+  0x00000006dc298000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81076, stack(0x0000000702d30000,0x0000000702e30000)]
+  0x00000006dc298800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81072, stack(0x0000000702c30000,0x0000000702d30000)]
+  0x00000006dc295000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81068, stack(0x0000000702b30000,0x0000000702c30000)]
+  0x00000006dc292000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81064, stack(0x0000000702a30000,0x0000000702b30000)]
+  0x00000006dc291000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81060, stack(0x0000000702930000,0x0000000702a30000)]
+  0x00000006dc290800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81056, stack(0x0000000702830000,0x0000000702930000)]
+  0x00000006dc288800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81052, stack(0x0000000702730000,0x0000000702830000)]
+  0x00000006dc28f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81048, stack(0x0000000702630000,0x0000000702730000)]
+  0x00000006dc28a000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81044, stack(0x0000000702530000,0x0000000702630000)]
+  0x00000006dc288000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81040, stack(0x0000000702430000,0x0000000702530000)]
+  0x00000006dc28f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81036, stack(0x0000000702330000,0x0000000702430000)]
+  0x00000006dc28c800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81032, stack(0x0000000702230000,0x0000000702330000)]
+  0x00000006dc28b800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81028, stack(0x0000000702130000,0x0000000702230000)]
+  0x00000006dc28b000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81024, stack(0x0000000702030000,0x0000000702130000)]
+  0x00000006dc287000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81020, stack(0x0000000701e30000,0x0000000701f30000)]
+  0x00000006dc28e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81016, stack(0x0000000701d30000,0x0000000701e30000)]
+  0x00000006dc289800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81012, stack(0x0000000701c30000,0x0000000701d30000)]
+  0x00000006dc28d000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81008, stack(0x0000000701b30000,0x0000000701c30000)]
+  0x00000006dc286800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81004, stack(0x0000000701a30000,0x0000000701b30000)]
+  0x00000006dc285800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=81000, stack(0x0000000701930000,0x0000000701a30000)]
+  0x00000006dc27e000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80996, stack(0x0000000701830000,0x0000000701930000)]
+  0x00000006dc280800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80992, stack(0x0000000701730000,0x0000000701830000)]
+  0x00000006dc282800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80988, stack(0x0000000701630000,0x0000000701730000)]
+  0x00000006dc282000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80984, stack(0x0000000701530000,0x0000000701630000)]
+  0x00000006dc27f800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80980, stack(0x0000000701430000,0x0000000701530000)]
+  0x00000006dc284000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80976, stack(0x0000000701330000,0x0000000701430000)]
+  0x00000006dc283800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80972, stack(0x0000000701230000,0x0000000701330000)]
+  0x00000006dc281000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80968, stack(0x0000000701130000,0x0000000701230000)]
+  0x00000006dc285000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80964, stack(0x0000000701030000,0x0000000701130000)]
+  0x00000006dc279000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80960, stack(0x0000000700f30000,0x0000000701030000)]
+  0x00000006dc27c000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80956, stack(0x0000000700e30000,0x0000000700f30000)]
+  0x00000006dc27f000 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80952, stack(0x0000000700d30000,0x0000000700e30000)]
+  0x00000006dc27a800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80948, stack(0x0000000700c30000,0x0000000700d30000)]
+  0x00000006dc27d800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80944, stack(0x0000000700b30000,0x0000000700c30000)]
+  0x00000006dc276800 JavaThread "Threas-Arduino-comunicacao-USB" daemon [_thread_blocked, id=80940, stack(0x0000000700a30000,0x0000000700b30000)]
+  0x00000006dc276000
