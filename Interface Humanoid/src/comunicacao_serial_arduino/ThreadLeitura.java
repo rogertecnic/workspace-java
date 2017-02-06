@@ -1,4 +1,4 @@
-package com_serial_arduino_usb;
+package comunicacao_serial_arduino;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,12 +42,10 @@ public class ThreadLeitura implements Runnable{
 			} 
 		}
 		synchronized(arduino_){
-			if(arduino_.arduinoConectado){
 				serialPort.close();
 				System.out.println("Classe ThreadLeitura linha 47: porta fechada na ThreadLeitura");
 				arduino_.reset();
-			}
-				arduino_.notify();
+			arduino_.notify();
 		}
 		synchronized (strings) {
 			strings.notify();
@@ -101,19 +99,25 @@ public class ThreadLeitura implements Runnable{
 	}
 
 	private void verificaValidade(){
-		if(strTemp.equals("finalLoop")){
+		if(strTemp.equals("readOk")){
 			synchronized (arduino_) {
-				arduino_.notify();
+				arduino_.notifyAll();
 			}
 		}else
-			if(strLength == strTemp.length()){
-				synchronized (strings) { // necessario para evitar leitura nequanto escreve
-					strings.add(strTemp);
-					strings.notify();
+			if(strTemp.equals("readFail"))
+				synchronized (arduino_) {
+					System.out.println("Classe ThreadLeitura linha 110: ATENCAO. arduino nao leu ultimo comando!");
+					arduino_.notify();
 				}
-			}else {
-				System.out.println("Classe ThreadLeitura linha 112: houve uma quebra de string no meio!");
-			}
+			else
+				if(strLength == strTemp.length()){
+					synchronized (strings) { // necessario para evitar leitura nequanto escreve
+						strings.add(strTemp);
+						strings.notify();
+					}
+				}else {
+					System.out.println("Classe ThreadLeitura linha 117: houve uma quebra de string no meio!");
+				}
 
 		count = 0;
 		strTemp = "";
@@ -154,7 +158,7 @@ public class ThreadLeitura implements Runnable{
 				return true;
 			}
 		}
-		System.out.println("Classe ThreadLeitura linha 154: porta " + nomeDaPorta +  " desconectada");
+		System.out.println("Classe ThreadLeitura linha 159: porta " + nomeDaPorta +  " desconectada");
 		return false;
 	}
 }

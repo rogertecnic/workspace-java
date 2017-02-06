@@ -5,4 +5,4 @@
  * @author Rogerio
  *
  */
-package com_serial_arduino_usb;
+package comunicacao_serial_arduino;

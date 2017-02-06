@@ -83,8 +83,8 @@ C  0x0000000002e27934
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  gnu.io.RXTXPort.readByte()I+0
 j  gnu.io.RXTXPort$SerialInputStream.read()I+81
-j  com_serial_arduino_usb.ThreadLeitura.realizaLeitura()V+14
-j  com_serial_arduino_usb.ThreadLeitura.run()V+1
+j  comunicacao_serial_arduino.ThreadLeitura.realizaLeitura()V+14
+j  comunicacao_serial_arduino.ThreadLeitura.run()V+1
 j  java.lang.Thread.run()V+11
 v  ~StubRoutines::call_stub
 

@@ -1,4 +1,4 @@
-package com_serial_arduino_usb;
+package comunicacao_serial_arduino;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -30,6 +30,7 @@ public class ArduinoUsb implements Runnable {
 	private ThreadLeitura threadLeitura = null;
 	private ThreadEscrita threadEscrita = null;
 	private JButton botaoConectar = null;
+	private SerialPort serialPort = null;
 
 	/**
 	 * ATENCAO: classe feita para ser gerenciada por um objeto JButton; 
@@ -42,8 +43,8 @@ public class ArduinoUsb implements Runnable {
 	public ArduinoUsb(JButton botaoConectar){
 		arduino_ = this;
 		this.botaoConectar = botaoConectar;
-		this.botaoConectar.setText("Desconectado");
-		this.botaoConectar.setBackground(Color.RED);
+		this.botaoConectar.setText("Conectar");
+		this.botaoConectar.setBackground(new Color(255, 155, 155));
 		this.botaoConectar.addMouseListener(new MouseListener() {
 
 			@Override
@@ -77,10 +78,21 @@ public class ArduinoUsb implements Runnable {
 					if(nomeDaPorta !=null){
 						conectarArduino(nomeDaPorta);
 					} else System.out.println("Classe ArduinoUsb linha 79: conexao cancelada!");
-				} else System.out.println( "Classe ArduinoUsb linha 80: Arduino ja conectado!");
+				} else {
+							write("close");
+
+					//arduino_.reset();
+					//serialPort.close();
+				}
 
 			}
-		});	
+		});
+		
+		try{
+			Thread.sleep(40);
+		} catch(InterruptedException e){
+			e.printStackTrace();
+		}
 	}
 
 	private void conectarArduino(String nomeDaPorta){
@@ -126,14 +138,14 @@ public class ArduinoUsb implements Runnable {
 	 */
 	private SerialPort verificaSePortaAberta(CommPortIdentifier portID){
 		try {
-			SerialPort serialPort = (SerialPort) portID.open("owner da porta: Software humanoid", 2000);
+			serialPort = (SerialPort) portID.open("owner da porta: Software humanoid", 10);
 			System.out.println("Classe ArduinoUsb linha 130: porta aberta e retornada");
 			return serialPort;
 		} catch (PortInUseException e) {
 			System.out.println("Classe ArduinoUsb linha 133: falha ao tentar abrir a porta, deve estar sendo usada por outro aplicativo");
 			e.printStackTrace();
 			return null;
-		}
+		} 
 	}
 
 
@@ -155,15 +167,18 @@ public class ArduinoUsb implements Runnable {
 		try {
 			arduinoConectado = true;
 			threadLeitura = new ThreadLeitura(arduino_, serialPort);
+			Thread.sleep(2000);
 			threadEscrita = new ThreadEscrita(arduino_, serialPort);
-			botaoConectar.setText("Conectado!");
-			botaoConectar.setBackground(Color.GREEN);
+			botaoConectar.setText("Desconectar");
+			botaoConectar.setBackground(new Color(0,255,220));
 		}
 		catch (IOException e) {
 			System.out.println("Classe ArduinoUsb linha 163: erro ao criar as streams de entrada e saida");
 			e.printStackTrace();
 		} catch (NoSuchPortException e) {
 			System.out.println("Classe ArduinoUsb linha 166: erro ao criar as streams de entrada e saida");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -174,12 +189,9 @@ public class ArduinoUsb implements Runnable {
 	 * IMPORTANTE: ela nao eh enviada no momento de execucao deste metodo,
 	 * ela eh salva e enviada assim que possivel (em casos normais quase instantaneamente)
 	 */
-	public void enviar(String strOut){
+	public void write(String strOut){
 		if(threadEscrita != null){
-			synchronized (arduino_) {
 				threadEscrita.strOut = strOut;
-				arduino_.notify();
-			}
 		}
 	}
 
@@ -188,7 +200,7 @@ public class ArduinoUsb implements Runnable {
 	 * @return ultima informacao lida do arduino
 	 * @throws InterruptedException 
 	 */
-	public String ler() throws InterruptedException{
+	public String read() throws InterruptedException{
 		if(arduinoConectado){
 			return threadLeitura.ler();
 		}
@@ -209,8 +221,8 @@ public class ArduinoUsb implements Runnable {
 		arduinoConectado = false;
 		threadLeitura = null;
 		threadEscrita = null;
-		botaoConectar.setText("Desconectado");
-		botaoConectar.setBackground(Color.RED);
+		botaoConectar.setText("Conectar");
+		botaoConectar.setBackground(new Color(255, 155, 155));
 		System.out.println("Classe ArduinoUsb, linha 214: porta devidamente fechada");
 	}
 }

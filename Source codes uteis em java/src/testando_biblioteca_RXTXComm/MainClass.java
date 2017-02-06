@@ -26,6 +26,18 @@ public class MainClass {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+
+			porta.close();
+			porta = null;
+			portaAberta = false;
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 	}

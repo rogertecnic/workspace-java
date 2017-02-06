@@ -1,4 +1,4 @@
-package com_serial_arduino_usb;
+package comunicacao_serial_arduino;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,6 +14,7 @@ public class ThreadEscrita implements Runnable {
 	private OutputStream serialOut = null;
 	private SerialPort serialPort = null;
 	protected String strOut = "";
+	private boolean startEnviado = false;
 
 	public ThreadEscrita(ArduinoUsb arduino_, SerialPort serialPort) throws NoSuchPortException, IOException{
 		this.arduino_ = arduino_;
@@ -29,16 +30,25 @@ public class ThreadEscrita implements Runnable {
 	public void run() {
 		while(verificaConexao(nomeDaPortaCOM) && arduino_.arduinoConectado){
 			try{
+				if(!startEnviado){
+					write("start");
+					startEnviado = true;
+				}
 				synchronized (arduino_) {
 					arduino_.wait();
+					System.out.println("enviada resposta ao arduino");
 					if(strOut.equals(""))
-						serialOut.write("1".getBytes());
+						write("ok");
 					else {
-						serialOut.write(strOut.getBytes());
+						write(strOut);
+						if(strOut.equals("close")){
+							arduino_.arduinoConectado = false;					
+						}
 						strOut = "";
 					}
 					arduino_.notify();
 				}
+
 			} catch(InterruptedException e ){
 				System.out.println("Classe ThreadEscrita linha 43: interrompida durante o whait");
 				e.printStackTrace();
@@ -46,14 +56,6 @@ public class ThreadEscrita implements Runnable {
 				System.out.println("Classe ThreadEscrita linha 46: thread escrita deu problema no whrite");
 				e.printStackTrace();
 			}
-		}
-		synchronized(arduino_){
-			if(arduino_.arduinoConectado){
-				serialPort.close();
-				System.out.println("Classe ThreadEscrita, linha 53: porta fechada na ThreadEscrita");
-				arduino_.reset();
-			}
-			arduino_.notify();
 		}
 	}
 
@@ -74,5 +76,21 @@ public class ThreadEscrita implements Runnable {
 		}
 		System.out.println("Classe ThreadEscrita linha 75: porta " + nomeDaPorta +  " desconectada");
 		return false;
+	}
+
+	protected void write(String str) throws IOException{
+		String inicio = "!i";
+		String fim = "!e";
+		int tamanho = str.length();
+		str = inicio + str + fim;
+		if(tamanho <10)
+			str += '0';
+		str += tamanho;
+		serialOut.write(str.getBytes());
+	}
+
+	public boolean prontoParaEnviar(){
+		if(strOut.equals("")) return true;
+		else return false;
 	}
 }

@@ -1,27 +1,12 @@
-package com_serial_arduino_usb;
+package comunicacao_serial_arduino;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout.Constraints;
-import javax.xml.crypto.dsig.keyinfo.KeyName;
 
-import org.jfree.data.KeyedValue;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
 
 public class MainClass {
 
@@ -52,7 +37,7 @@ public class MainClass {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER){
-					arduino.enviar(t.getText());
+					arduino.write(t.getText());
 					t.setText("");
 				}
 			}
@@ -62,15 +47,17 @@ public class MainClass {
 		janela.pack();
 		
 		while(true){
-			try {
-				Thread.sleep(100);
-				String a = arduino.ler();
+				String a = "";
+				try {
+					a = arduino.read();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				if(!a.equals(""))
 				System.out.println(a);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 		
 	}
