@@ -1,4 +1,4 @@
-package comunicacao_serial_arduino;
+package lib_comunicacao_serial_arduino;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -80,9 +80,6 @@ public class ArduinoUsb implements Runnable {
 					} else System.out.println("Classe ArduinoUsb linha 79: conexao cancelada!");
 				} else {
 							write("close");
-
-					//arduino_.reset();
-					//serialPort.close();
 				}
 
 			}
@@ -201,7 +198,7 @@ public class ArduinoUsb implements Runnable {
 	 * @throws InterruptedException 
 	 */
 	public String read() throws InterruptedException{
-		if(arduinoConectado){
+		if(arduinoConectado && threadLeitura != null){
 			return threadLeitura.ler();
 		}
 		else{ 
@@ -213,7 +210,9 @@ public class ArduinoUsb implements Runnable {
 
 
 	public boolean estadoComunicacao(){
-		return arduinoConectado;
+		if(threadEscrita != null)
+		return threadEscrita.startEnviado();
+		else return false;
 	}
 
 

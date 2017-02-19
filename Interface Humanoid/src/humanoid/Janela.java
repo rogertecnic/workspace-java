@@ -14,8 +14,8 @@ import javax.swing.JTextArea;
 
 public class Janela {
 	
-    public static void addComponentsToPane(Container pane) {   	
-    	
+    //public static void addComponentsToPane(Container pane) {   	
+    public Janela(Container pane){	
     //Janela
     pane.setLayout(new GridBagLayout());
     Slider slider = new Slider();
@@ -104,8 +104,8 @@ public class Janela {
     
     }
     
-   /* public void ordenarId( List<Estado> listEstado){
-    	 List<Estado> temp = new ArrayList<>();
+   /* public void ordenarId( TablePanel<Estado> listEstado){
+    	 TablePanel<Estado> temp = new ArrayList<>();
     	for(int i = 0;i<13;i++){
     		for(int j = 0;i<13;j++){
     			if(listEstado.get(j). == i)

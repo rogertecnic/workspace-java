@@ -5,4 +5,4 @@
  * @author Rogerio
  *
  */
-package comunicacao_serial_arduino;
+package lib_comunicacao_serial_arduino;

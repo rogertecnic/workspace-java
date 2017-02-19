@@ -1,4 +1,4 @@
-package comunicacao_serial_arduino;
+package humanoid_modificado.comunicacao_serial_arduino;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,13 +12,11 @@ public class ThreadEscrita implements Runnable {
 	private ArduinoUsb arduino_ = null; // necessario para referenciar o proprio arduino dentro das threads
 	private String nomeDaPortaCOM = null;
 	private OutputStream serialOut = null;
-	private SerialPort serialPort = null;
 	protected String strOut = "";
 	private boolean startEnviado = false;
 
 	public ThreadEscrita(ArduinoUsb arduino_, SerialPort serialPort) throws NoSuchPortException, IOException{
 		this.arduino_ = arduino_;
-		this.serialPort = serialPort;
 		serialOut = serialPort.getOutputStream();
 		nomeDaPortaCOM = CommPortIdentifier.getPortIdentifier(serialPort).getName();
 		Thread thread = new Thread(this, "ThreadEscrita");
@@ -36,7 +34,6 @@ public class ThreadEscrita implements Runnable {
 				}
 				synchronized (arduino_) {
 					arduino_.wait();
-					System.out.println("enviada resposta ao arduino");
 					if(strOut.equals(""))
 						write("ok");
 					else {
@@ -88,9 +85,8 @@ public class ThreadEscrita implements Runnable {
 		str += tamanho;
 		serialOut.write(str.getBytes());
 	}
-
-	public boolean prontoParaEnviar(){
-		if(strOut.equals("")) return true;
-		else return false;
+	
+	protected boolean startEnviado(){
+		return startEnviado;
 	}
 }

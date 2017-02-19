@@ -3,7 +3,7 @@
    por exempo: readString();
    isso atraza o processamento do arduino muito;
    utilizar as funcoes deste arquivo;
-   problema de limite do buffer do arduino resolvido se usar estas funcoes
+   buffer do arduino de 64 bytes, nao ultrapassar isso
 */
 
 String strLida = "";
@@ -106,6 +106,10 @@ void serialEvent() {
   while ((Serial.available() == 0) && arduinoConectado) {
 
   }
+}
+
+boolean isArduinoConectado(){
+  return arduinoConectado;
 }
 
 

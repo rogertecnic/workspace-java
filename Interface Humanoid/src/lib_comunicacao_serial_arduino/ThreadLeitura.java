@@ -1,4 +1,4 @@
-package comunicacao_serial_arduino;
+package lib_comunicacao_serial_arduino;
 
 import java.io.IOException;
 import java.io.InputStream;
