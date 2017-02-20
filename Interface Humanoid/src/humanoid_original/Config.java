@@ -1,4 +1,4 @@
-package humanoid;
+package humanoid_original;
 
 import javax.swing.JTextField;
 

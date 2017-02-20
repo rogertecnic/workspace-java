@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 
-public class MainClass {
+public class MainTeste {
 
 
 	public static void main(String[] args){

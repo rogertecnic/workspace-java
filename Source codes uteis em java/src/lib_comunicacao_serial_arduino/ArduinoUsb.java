@@ -135,7 +135,7 @@ public class ArduinoUsb implements Runnable {
 	 */
 	private SerialPort verificaSePortaAberta(CommPortIdentifier portID){
 		try {
-			serialPort = (SerialPort) portID.open("owner da porta: Software humanoid", 10);
+			serialPort = (SerialPort) portID.open("owner da porta: Software humanoid_original", 10);
 			System.out.println("Classe ArduinoUsb linha 130: porta aberta e retornada");
 			return serialPort;
 		} catch (PortInUseException e) {

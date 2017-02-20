@@ -1,4 +1,4 @@
-package humanoid;
+package humanoid_original;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -18,18 +18,6 @@ public class Main {
 		//Display the window.
 		frame.pack();
 		frame.setVisible(true);
-		
-		String s = "";
-		while(true){
-			try {
-				s = ArduinoPanel.arduino().read();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			if(!s.equals("")){
-				System.out.print(s);
-				s = "";
-			}
-		}
+		frame.setMinimumSize(frame.getSize());
 	}
 }

@@ -8,7 +8,7 @@ import javax.swing.border.TitledBorder;
 
 import humanoid_modificado.comunicacao_serial_arduino.ArduinoUsb;
 
-public class ArduinoPanel extends JPanel{
+public class ArduinoPanel{
 	private static JButton botaoArduino = new JButton();
 	private static ArduinoUsb arduino = null;
 	private static JPanel panel = null;

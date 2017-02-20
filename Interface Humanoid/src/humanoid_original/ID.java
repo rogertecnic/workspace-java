@@ -1,4 +1,4 @@
-package humanoid;
+package humanoid_original;
 
 public class ID {
 	private int id;

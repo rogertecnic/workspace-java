@@ -38,8 +38,12 @@ void loop() {
 //    }
 
 int *servos = estadoRecebido();
+String s = "";
 for(int i = 0; i < servos[0]; i++)
-enviar(String( servos[i]));
+s += String( servos[i]);
+if(s != "")
+enviar(s);
+resetArrayServos();
 //if(servos.length > 0) enviar("ok");
 
 

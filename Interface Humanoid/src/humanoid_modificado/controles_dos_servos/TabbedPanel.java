@@ -46,7 +46,7 @@ public class TabbedPanel extends JTabbedPane {
 	 * @param servosDeIncremento
 	 */
 	private void addServoSlider(ArrayList<ServoMotorSliderPanel> servosDeIncremento, TabbedPanel controleDosServos){
-		for(int id = 0; id <=14; id++){ // quantidade total de motores, alterar aqui
+		for(int id = 0; id <14; id++){ // quantidade total de motores, alterar aqui
 			if(servosDeIncremento == null)
 				arrayServosIncremento.add(new ServoMotorSliderPanel(id, -90, 90, 0, null, controleDosServos));
 			else

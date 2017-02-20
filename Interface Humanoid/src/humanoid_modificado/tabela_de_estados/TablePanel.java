@@ -37,7 +37,6 @@ public class TablePanel extends JPanel{
 		tabelaDeEstados.getColumnModel().getColumn(2).setResizable(false);
 		tabelaDeEstados.getColumnModel().getColumn(0).setMaxWidth(20);
 		tabelaDeEstados.getColumnModel().getColumn(2).setMaxWidth(50);
-		tabelaDeEstados.setPreferredScrollableViewportSize(new Dimension(300, 300));
 		tabelaDeEstados.addMouseListener(tabelaMouseListener());
 		tabelaDeEstados.getSelectionModel().addListSelectionListener(selecaoTecladoListener());
 		tabelaDeEstados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -47,9 +46,11 @@ public class TablePanel extends JPanel{
 		scrollDaTabela.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.setBorder(new TitledBorder("Tabela de Estados:"));
 		c.gridwidth = 2;
+		scrollDaTabela.setPreferredSize(new Dimension(300, 450));
 		this.add(scrollDaTabela,c);
 		c.gridwidth = 1;
 		c.gridy = 1;
+		c.fill = GridBagConstraints.NONE;
 		this.add(new ControleArquivoEstados(tabelaDeEstados, this),c);
 		c.gridx = 1;
 		this.add(new SalvarHeaderFile(modeloDaTabelaDeEstados, controlesServos),c);
