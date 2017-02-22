@@ -32,12 +32,17 @@ public class ThreadLeitura implements Runnable{
 
 	@Override
 	public void run() {
-		while(arduino_.arduinoConectado && verificaConexao(nomeDaPortaCOM)){
+		
+		while(arduino_.arduinoConectado ){
+//				&& verificaConexao(nomeDaPortaCOM)){ este metodo atraza a execucao no pc do humanoid devido a um metodo da biblioteca
 			try{
+				System.out.println("classe ThreadLeitura linha 37");
 				realizaLeitura();
 			}
 			catch(IOException e){
 				System.out.println("Classe ThreadLeitura linha 40: problema na thread de leitura, encerrando thread");
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} 
 		}
@@ -54,9 +59,10 @@ public class ThreadLeitura implements Runnable{
 
 	/**
 	 * realiza a sequencia de leitura de uma String
+	 * @throws InterruptedException 
 	 * @throws IOExceptions
 	 */
-	private void realizaLeitura() throws IOException{
+	private void realizaLeitura() throws IOException, InterruptedException{
 		if(serialIn.available()>0){
 			char c = (char)serialIn.read();
 			switch(lendoString){
@@ -95,6 +101,8 @@ public class ThreadLeitura implements Runnable{
 				break;
 			}
 			}
+		} else{
+			Thread.sleep(200);
 		}
 	}
 
@@ -151,7 +159,7 @@ public class ThreadLeitura implements Runnable{
 	 */
 	private boolean verificaConexao(String nomeDaPorta){
 		@SuppressWarnings("unchecked")
-		Enumeration<CommPortIdentifier> listaDePortas = CommPortIdentifier.getPortIdentifiers();
+		Enumeration<CommPortIdentifier> listaDePortas = CommPortIdentifier.getPortIdentifiers(); // este metodo deixa o codigo lento
 		while(listaDePortas.hasMoreElements()){
 			CommPortIdentifier	portID = listaDePortas.nextElement();
 			if(nomeDaPorta.equals(portID.getName())){

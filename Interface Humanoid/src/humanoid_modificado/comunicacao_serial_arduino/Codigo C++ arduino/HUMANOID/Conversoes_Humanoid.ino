@@ -1,10 +1,9 @@
-int *estadoDosServos = {0}; // ponteiro global que vai guardar o array de valores dos servos,
-
+int *estadoDosServos = motors ; // ponteiro global que vai guardar o array de valores dos servos,
 /**
    funcao retorna um ponteiro para o array do angulo dos servos, o primeiro elemento [0] eh o tamanho do array;
    se caso ainda nao foi recebido nenhum array utilizavel, ele vai ser um array de um elemento sendo: {0};
    utilizar assim:
-   int *servos = estadoRecebido();
+   int* servos = estadoRecebido();
    pode-se acessar os valores no array normalmente, acessando o valor na quarta posicao do array (terceiro motor):
    servos[3];
    lembrando que:
@@ -16,7 +15,7 @@ int *estadoDosServos = {0}; // ponteiro global que vai guardar o array de valore
    .
   servos[pservos[0]-1]: ultimo motor;
 */
-int *estadoRecebido() {
+int* estadoRecebido() {
   String s = ler();
   if (!s.equals("")) {
     // contando o numero de servos
@@ -46,27 +45,6 @@ int *estadoRecebido() {
 
 void resetArrayServos(){
   delete estadoDosServos;
-  estadoDosServos = {0};
-}
-
-void initServos(){
-  int timer = 100;
-  servo_0.attach(PIN_SERVO_0, MIN_RANGE_SERVO_0, MAX_RANGE_SERVO_0);
-  servo_1.attach(PIN_SERVO_1, MIN_RANGE_SERVO_1, MAX_RANGE_SERVO_1);
-  servo_2.attach(PIN_SERVO_2, MIN_RANGE_SERVO_2, MAX_RANGE_SERVO_2);
-  servo_3.attach(PIN_SERVO_3, MIN_RANGE_SERVO_3, MAX_RANGE_SERVO_3);
-  servo_4.attach(PIN_SERVO_4, MIN_RANGE_SERVO_4, MAX_RANGE_SERVO_4);
-  servo_5.attach(PIN_SERVO_5, MIN_RANGE_SERVO_5, MAX_RANGE_SERVO_5);
-  servo_6.attach(PIN_SERVO_6, MIN_RANGE_SERVO_6, MAX_RANGE_SERVO_6);
-  servo_7.attach(PIN_SERVO_7, MIN_RANGE_SERVO_7, MAX_RANGE_SERVO_7);
-
-  servo_0.writeMicroseconds(map(90, 0, 180, MIN_RANGE_SERVO_0, MAX_RANGE_SERVO_0));
-    servo_1.writeMicroseconds(map(90, 0, 180, MIN_RANGE_SERVO_1, MAX_RANGE_SERVO_1));
-    servo_2.writeMicroseconds(map(90, 0, 180, MIN_RANGE_SERVO_2, MAX_RANGE_SERVO_2));
-    servo_3.writeMicroseconds(map(92, 0, 180, MIN_RANGE_SERVO_3, MAX_RANGE_SERVO_3));
-    servo_4.writeMicroseconds(map(80, 0, 180, MIN_RANGE_SERVO_4, MAX_RANGE_SERVO_4));
-    servo_5.writeMicroseconds(map(85, 0, 180, MIN_RANGE_SERVO_5, MAX_RANGE_SERVO_5));
-    servo_6.writeMicroseconds(map(90, 0, 180, MIN_RANGE_SERVO_6, MAX_RANGE_SERVO_6));
-    servo_7.writeMicroseconds(map(90, 0, 180, MIN_RANGE_SERVO_7, MAX_RANGE_SERVO_7));
+  estadoDosServos = motors;
 }
 

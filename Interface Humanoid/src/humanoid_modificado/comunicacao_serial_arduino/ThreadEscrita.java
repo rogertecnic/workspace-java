@@ -27,13 +27,14 @@ public class ThreadEscrita implements Runnable {
 	@Override
 	public void run() {
 		while(verificaConexao(nomeDaPortaCOM) && arduino_.arduinoConectado){
+			System.out.println("classe ThreadEscrita linha 30");
 			try{
 				if(!startEnviado){
 					write("start");
 					startEnviado = true;
 				}
 				synchronized (arduino_) {
-					arduino_.wait();
+					arduino_.wait(); // a lentidão é bem aqui, durante a leitura
 					if(strOut.equals(""))
 						write("ok");
 					else {
