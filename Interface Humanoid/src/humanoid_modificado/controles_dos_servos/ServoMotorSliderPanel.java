@@ -49,6 +49,8 @@ public class ServoMotorSliderPanel extends JPanel{
 						Integer.parseInt(textFieldValor.getText()) >= slider.getMinimum() &&
 						Integer.parseInt(textFieldValor.getText()) <= slider.getMaximum()){
 					setValue(Integer.parseInt(textFieldValor.getText()));
+					if(TodosOsCheckBox.enviarDadosArduino().isSelected())
+						controleDosServos.enviaAngulosParaArduino();
 				}
 			}
 		});
@@ -66,12 +68,12 @@ public class ServoMotorSliderPanel extends JPanel{
 			public void mouseReleased(MouseEvent e) {
 				setValue(slider.getValue());
 				if(TodosOsCheckBox.enviarDadosArduino().isSelected())
-				controleDosServos.enviaAngulosParaArduino();
+					controleDosServos.enviaAngulosParaArduino();
 			}
 		});
 	}
-	
-	
+
+
 	public void atualizaControleServoIncremental(){
 		if(servoIncrementoCorrespondente != null){
 			if(servoIncrementoCorrespondente.getValue()< -(slider.getValue())){
@@ -88,11 +90,11 @@ public class ServoMotorSliderPanel extends JPanel{
 		controleDosServos.atualizaTabelaDeEstados();
 
 	}
-	
+
 	public int getID(){
 		return  id;
 	}
-	
+
 	public int getMinValue(){
 		return slider.getMinimum();
 	}
@@ -118,5 +120,5 @@ public class ServoMotorSliderPanel extends JPanel{
 	public void setMaxValue(int max){
 		slider.setMaximum(max);
 	}
-	
+
 }
