@@ -119,7 +119,8 @@ public class ArduinoUsb implements Runnable {
 				return portID;
 			}
 		}
-		System.out.println("Classe ArduinoUsb linha 8116: porta " + nomeDaPorta +  " NAO Existe: nome errado ou arduino deve estar desconectado da USB.");
+		JOptionPane.showMessageDialog(null, nomeDaPorta +  " NAO Existe essa porta o equus africanus!!", "porra", 0);
+		System.out.println("Classe ArduinoUsb linha 122: porta " + nomeDaPorta +  " NAO Existe: nome errado ou arduino deve estar desconectado da USB.");
 		return null;
 	}
 

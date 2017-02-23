@@ -36,7 +36,6 @@ public class ThreadLeitura implements Runnable{
 		while(arduino_.arduinoConectado ){
 //				&& verificaConexao(nomeDaPortaCOM)){ este metodo atraza a execucao no pc do humanoid devido a um metodo da biblioteca
 			try{
-				System.out.println("classe ThreadLeitura linha 37");
 				realizaLeitura();
 			}
 			catch(IOException e){

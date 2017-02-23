@@ -27,7 +27,6 @@ public class ThreadEscrita implements Runnable {
 	@Override
 	public void run() {
 		while(verificaConexao(nomeDaPortaCOM) && arduino_.arduinoConectado){
-			System.out.println("classe ThreadEscrita linha 30");
 			try{
 				if(!startEnviado){
 					write("start");
