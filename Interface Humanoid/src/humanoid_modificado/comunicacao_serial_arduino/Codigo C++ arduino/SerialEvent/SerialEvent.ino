@@ -92,7 +92,7 @@ void loop() {
     servo_6.writeMicroseconds(map(servos[7], 0, 180, MIN_RANGE_SERVO_6, MAX_RANGE_SERVO_6));
     servo_7.writeMicroseconds(map(servos[8], 0, 180, MIN_RANGE_SERVO_7, MAX_RANGE_SERVO_7));
   }
-  //resetArrayServos();
+  resetArrayServos();
   //if(servos.length > 0) enviar("ok");
 
 

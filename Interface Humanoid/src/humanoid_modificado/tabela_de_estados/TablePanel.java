@@ -18,14 +18,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import humanoid_modificado.controles_dos_servos.TabbedPanel;
+import humanoid_modificado.obj_estaticos_publicos_variados.TodosOsCheckBox;
 
 public class TablePanel extends JPanel{
 	private TableModel modeloDaTabelaDeEstados;
 	private JTable tabelaDeEstados;
 	private JScrollPane scrollDaTabela;
-	private TabbedPanel controlesServos;
+	private TabbedPanel controleDosServos;
 	public TablePanel(TabbedPanel controlesServos){
-		this.controlesServos = controlesServos;
+		this.controleDosServos = controlesServos;
 		controlesServos.setTabelaDeEstados(this);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -79,8 +80,8 @@ public class TablePanel extends JPanel{
 					mouseMenu.show(e.getComponent(), e.getX(), e.getY());
 				} else if(e.getButton() == 1){
 					modeloDaTabelaDeEstados.excluirLinhaSelecionada(tabelaDeEstados);
-					controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
-					controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow())); // precisa chamar 2 vezes o metodo
+					controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
+					controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow())); // precisa chamar 2 vezes o metodo
 					int[] i =modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow());
 					//DEBUG
 					for(int a = 0;a<i.length; a++ ) System.out.print(i[a]);
@@ -105,8 +106,10 @@ public class TablePanel extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
-				controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow())); // precisa chamar 2 vezes o metodo
+				controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
+				controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow())); // precisa chamar 2 vezes o metodo
+				if(TodosOsCheckBox.enviarDadosArduino().isSelected())
+					controleDosServos.enviaAngulosParaArduino();
 			}
 		};
 	}
@@ -116,7 +119,7 @@ public class TablePanel extends JPanel{
 	}
 	
 	protected void updateControlesServos(){
-		controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
-		controlesServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
+		controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
+		controleDosServos.setDadosDoIncremento(modeloDaTabelaDeEstados.getDadosDoEstado(tabelaDeEstados.getSelectedRow()));
 	}
 }
