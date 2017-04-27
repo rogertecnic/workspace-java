@@ -1,4 +1,4 @@
-package debug_gui;
+package interface_SEK;
 
 import java.awt.event.KeyEvent;
 
