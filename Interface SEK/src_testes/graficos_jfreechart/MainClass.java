@@ -16,11 +16,23 @@ public class MainClass {
 	public static void main(String[] args){
 		XYSeries serieDeDados = new XYSeries("Serie de dados 1");
 		XYSeriesCollection colecaoDeSeries = new XYSeriesCollection(serieDeDados);
-		for(int i = 0; i< 11; i++)
-			serieDeDados.add(i, i*i);
+		
 		
 		JFreeChart chart = ChartFactory.createXYLineChart("Gráfico", "LAbel x", "Label y", colecaoDeSeries, PlotOrientation.VERTICAL, true, true, true);
 		ChartFrame frame = new ChartFrame("titulo do frame", chart);
+		frame.pack();
 		frame.setVisible(true);
+		
+		
+		
+		for(int i = 0; i< 11; i++){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			serieDeDados.add(i, i*i);
+		}
 	}
 }

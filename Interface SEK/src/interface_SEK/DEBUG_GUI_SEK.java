@@ -19,11 +19,12 @@ public class DEBUG_GUI_SEK {
 		JFrame frame = new JFrame("DEBUG GUI SEK 2017 1.0");
 		SpringLayout springLayout = new SpringLayout();
 		frame.getContentPane().setLayout(springLayout);
-
-		MenuBar menubar = new MenuBar();
+		
+		final ConsoleFieldReceiver textfieldreceiver = new ConsoleFieldReceiver();
+		MenuBar menubar = new MenuBar(textfieldreceiver);
 		frame.setJMenuBar(menubar);
 
-		final ConsoleFieldReceiver textfieldreceiver = new ConsoleFieldReceiver();
+		
 		JScrollPaneClass scrollpanereceiver = new JScrollPaneClass(textfieldreceiver);
 		scrollpanereceiver.setWheelScrollingEnabled(true);
 		scrollpanereceiver.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

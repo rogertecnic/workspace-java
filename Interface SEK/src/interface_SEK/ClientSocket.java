@@ -12,7 +12,7 @@ public class ClientSocket extends Thread {
 	private static PrintStream saida = null;
 	private static Scanner entrada = null;
 	private int cont = 0;
-	private int latencia = 20;
+	private int latencia = 5;
 	private String strTemp = "";
 
 	@Override

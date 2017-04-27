@@ -1,3 +1,13 @@
+import java.sql.Time;
+import java.util.Stack;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
@@ -18,13 +28,17 @@ public class MainClass {
 	double larguraRobo = 0.139; //m largura ta certa
 	double espacoAcc = velo*velo/(2*acc); // espaco que a aceleracao dura
 	double posicaoDesaceleracao = 0;
-
+	
 	int Kp = 1;
 	int Kd = 1;
 	double PD = 0;
 	double erro = 0;
 	double erroAnt = 0;
 	int dt = 8; // tempo do PD em ms
+	
+	//debug
+	Stack<String> dados = new Stack<String>(); 
+
 
 
 	public void instance(){
@@ -32,6 +46,8 @@ public class MainClass {
 		rodaD = new EV3LargeRegulatedMotor(MotorPort.B);
 		//motorG = new EV3MediumRegulatedMotor(MotorPort.C);
 		resetMotors();
+//		ServerSocket.init(5);
+//		while(!ServerSocket.getStatus());
 	}
 	public void resetMotors(){
 		PD = 0;
@@ -154,13 +170,16 @@ public class MainClass {
 
 		rodaE.forward();
 		rodaD.forward();
-
-		while(SD<posicaoDesaceleracao || SE<posicaoDesaceleracao){
+		
+		long time = System.currentTimeMillis();
+		while(SD<posicaoDesaceleracao || SE<posicaoDesaceleracao){// controle
 			Delay.msDelay(dt);
 			SD = (rodaD.getTachoCount() - thetaDinicial)*3.1415/180*raioRoda;
 			SE = (rodaE.getTachoCount() - thetaEinicial)*3.1415/180*raioRoda;
+			
 			erroAnt = erro;
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
+			dados.push("(" + erro*100 + "," + (System.currentTimeMillis()-time) + ")");
 			PD = Kp*erro + Kd*(erro - erroAnt)/dt;
 			rodaD.setSpeed((float) ((velo - PD)/raioRoda*180/3.1415) );
 			rodaE.setSpeed((float) ((velo + PD)/raioRoda*180/3.1415) );
@@ -170,7 +189,7 @@ public class MainClass {
 		SE = rodaE.getTachoCount();
 		double SDant = 0;
 		double SEant = 0;
-		while(SD != SDant || SE != SEant){
+		while(SD != SDant || SE != SEant){// parando o robo
 			rodaE.stop(true);
 			rodaD.stop(true);
 			Delay.msDelay(20);
@@ -178,7 +197,10 @@ public class MainClass {
 			SEant = SE;
 			SD = rodaD.getTachoCount();
 			SE = rodaE.getTachoCount();
-			System.out.println("(" + SE + ", " + SD + ")");
+		}
+		while(!dados.isEmpty()){
+			ServerSocket.whrite(dados.pop());
+			Delay.msDelay(100);
 		}
 		Button.waitForAnyPress();
 		resetMotors();
@@ -187,14 +209,15 @@ public class MainClass {
 	
 	public void testarRaioDaRoda(){
 		instance();
-		rodaE.rotate((int)(360*5), true);
-		rodaD.rotate((int)(360*5), false);
+		rodaE.rotate((int)(360*10), true);
+		rodaD.rotate((int)(360*10), false);
 	}
+
 	
 	
 	public static void main(String[] args){
 		MainClass minhaclasse = new MainClass();
-		//minhaclasse.testarRaioDaRoda();
-		minhaclasse.linhaReta(1);
+		minhaclasse.testarRaioDaRoda();
+		//minhaclasse.linhaReta(1);
 	}
 }

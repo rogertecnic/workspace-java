@@ -1,4 +1,4 @@
-package conect_brick_testes;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -28,15 +28,16 @@ public class ServerSocket extends Thread{
 	private static PrintStream saida = null;
 	private static Scanner entrada = null;
 	private static final ServerSocket THREAD = new ServerSocket();
-	private static int latencia = 20;
+	private static int latencia = 5;
 	private static String strParaEnviar = "";
 	private static String strParaReceber = "";
+	private static boolean connectionStatus = false;
 
 
 	/**
 	 * Inicia a comunicacao com o pc, esse metodo deve ser chamado antes de conectar o pc
 	 * @param latencia periodo em milisec de pausa entre cada iteracao da comunicacao
-	 * padrao 20, favos nao usar um tempo diferente de 20 ate ser implementado no software esse tempo
+	 * padrao 5, favos nao usar um tempo diferente de 20 ate ser implementado no software esse tempo
 	 */
 	public static void init(int latencia){
 		if(serverSocket == null){
@@ -74,6 +75,9 @@ public class ServerSocket extends Thread{
 		return strParaReceber;
 	}
 	
+	public static boolean getStatus(){
+		return connectionStatus;
+	}
 	
 	/**
 	 * Sequencia de execucao da Thread:
@@ -105,6 +109,7 @@ public class ServerSocket extends Thread{
 				try {
 					System.out.println("server: Aguardando conexao...");
 					clientSocket = serverSocket.accept();
+					connectionStatus = true;
 					System.out.println("server: cliente conectado");
 					saida = new PrintStream(clientSocket.getOutputStream());
 					entrada = new Scanner(clientSocket.getInputStream());
@@ -136,6 +141,7 @@ public class ServerSocket extends Thread{
 							e.printStackTrace();
 						}
 						entrada = null;
+						connectionStatus = false;
 						saida = null;
 						clientSocket = null;
 					}

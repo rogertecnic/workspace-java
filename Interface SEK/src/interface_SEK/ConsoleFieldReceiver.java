@@ -23,7 +23,11 @@ public class ConsoleFieldReceiver extends JTextArea implements Runnable{
 		Thread updateFileld = new Thread(this);
 		updateFileld.start();
 	}
-
+	
+	public String getLog(){
+		return log;
+	}
+	
 	@Override
 	public void run() {
 		while(true){

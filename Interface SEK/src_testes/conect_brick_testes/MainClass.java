@@ -1,5 +1,7 @@
 package conect_brick_testes;
 
+import interface_SEK.ServerSocket;
+
 public class MainClass {
 	public static void main(String[] args){
 		ServerSocket.init(20);
