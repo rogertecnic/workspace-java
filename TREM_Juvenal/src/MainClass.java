@@ -1,4 +1,4 @@
-import java.sql.Time;
+ import java.sql.Time;
 import java.util.Stack;
 
 import org.jfree.chart.ChartFactory;
@@ -24,7 +24,7 @@ public class MainClass {
 	EV3MediumRegulatedMotor motorG;
 	double acc = 0.3; //m/s^2
 	double velo = 0.2; //m/s
-	double raioRoda = 0.041; //m radio = diametro da roda div por 2, roda branca grandona
+	double raioRoda = 0.04082; //m radio = diametro da roda div por 2, roda branca grandona
 	//double raioRoda = 0.05494/2; //m radio = diametro da roda div por 2, roda de rally
 	double larguraRobo = 0.139; //m largura ta certa
 	double espacoAcc = velo*velo/(2*acc); // espaco que a aceleracao dura
@@ -182,7 +182,7 @@ public class MainClass {
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
 			dados.push("(" + erro*100 + "," + (System.currentTimeMillis()-time) + ")");
 			PD = Kp*erro + Kd*(erro - erroAnt)/dt;
-			rodaD.setSpeed((float) ((velo - PD)/raioRoda*180/3.1415) );
+			rodaD.setSpeed((float) ((velo - PD+0.002)/raioRoda*180/3.1415) );
 			rodaE.setSpeed((float) ((velo + PD)/raioRoda*180/3.1415) );
 		}
 		
@@ -210,8 +210,8 @@ public class MainClass {
 	
 	public void testarRaioDaRoda(){
 		instance();
-		rodaE.rotate((int)(360*4), true);
-		rodaD.rotate((int)(360*4), false);
+		rodaE.rotate((int)(360*8), true);
+		rodaD.rotate((int)(360*8), false);
 	}
 
 	
