@@ -24,7 +24,8 @@ public class MainClass {
 	EV3MediumRegulatedMotor motorG;
 	double acc = 0.3; //m/s^2
 	double velo = 0.2; //m/s
-	double raioRoda = 0.05494/2; //m radio = diametro da roda div por 2
+	double raioRoda = 0.041; //m radio = diametro da roda div por 2, roda branca grandona
+	//double raioRoda = 0.05494/2; //m radio = diametro da roda div por 2, roda de rally
 	double larguraRobo = 0.139; //m largura ta certa
 	double espacoAcc = velo*velo/(2*acc); // espaco que a aceleracao dura
 	double posicaoDesaceleracao = 0;
@@ -209,15 +210,15 @@ public class MainClass {
 	
 	public void testarRaioDaRoda(){
 		instance();
-		rodaE.rotate((int)(360*10), true);
-		rodaD.rotate((int)(360*10), false);
+		rodaE.rotate((int)(360*4), true);
+		rodaD.rotate((int)(360*4), false);
 	}
 
 	
 	
 	public static void main(String[] args){
 		MainClass minhaclasse = new MainClass();
-		minhaclasse.testarRaioDaRoda();
-		//minhaclasse.linhaReta(1);
+		//minhaclasse.testarRaioDaRoda();
+		minhaclasse.linhaReta(1);
 	}
 }
