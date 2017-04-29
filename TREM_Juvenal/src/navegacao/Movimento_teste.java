@@ -1,16 +1,9 @@
- import java.sql.Time;
+package navegacao;
 import java.util.Stack;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
+import classes_suporte.ServerSocket;
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.utility.Delay;
 /**
@@ -18,14 +11,13 @@ import lejos.utility.Delay;
  * @author Rogerio
  *
  */
-public class MainClass {
+public class Movimento_teste {
 	EV3LargeRegulatedMotor rodaE;
 	EV3LargeRegulatedMotor rodaD;
-	EV3MediumRegulatedMotor motorG;
 	double acc = 0.3; //m/s^2
 	double velo = 0.2; //m/s
+	
 	double raioRoda = 0.04082; //m radio = diametro da roda div por 2, roda branca grandona
-	//double raioRoda = 0.05494/2; //m radio = diametro da roda div por 2, roda de rally
 	double larguraRobo = 0.139; //m largura ta certa
 	double espacoAcc = velo*velo/(2*acc); // espaco que a aceleracao dura
 	double posicaoDesaceleracao = 0;
@@ -217,8 +209,9 @@ public class MainClass {
 	
 	
 	public static void main(String[] args){
-		MainClass minhaclasse = new MainClass();
+		Movimento_teste minhaclasse = new Movimento_teste();
 		//minhaclasse.testarRaioDaRoda();
 		minhaclasse.linhaReta(1);
 	}
+	
 }
