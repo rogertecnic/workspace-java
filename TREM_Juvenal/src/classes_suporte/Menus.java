@@ -49,6 +49,7 @@ public class Menus {
 			case Button.ID_ENTER: {
 				LCD.clear();
 				escolhaRealizada = true;
+				bossJaEscolhido = true;
 				break;
 			}default : {
 				if(boss == Const.DARTH_VADER) boss = Const.LEIA;

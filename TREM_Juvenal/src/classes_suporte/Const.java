@@ -8,6 +8,11 @@ public class Const {
  public static final int ESQUERDA = 3;
  public static final int DIREITA = 4;
  
+ public static final double acc = 0.3; //m/s^2
+ public static final double velo = 0.2; //m/s
+	
+ public static final double raioRoda = 0.04082; //m raio = diametro da roda div por 2, roda branca grandona
+ public static final double larguraRobo = 0.139; //m largura ta certa
  
  public static final int CTE_1 = 5;
  public static final int CTE_2 = 6;

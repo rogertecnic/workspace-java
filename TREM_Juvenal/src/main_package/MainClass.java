@@ -12,7 +12,7 @@ public class MainClass {
 		while(true){
 			menus.mostraMenus();
 
-			Thread threadBusca = new Thread(new ThreadDaProva(), "thread de execucao da prova");
+			Thread threadBusca = new Thread(new ThreadDaProva(menus.getBoss(), menus.getLadoDeProcura()), "thread de execucao da prova");
 
 			threadBusca.start();
 			Button.ENTER.waitForPressAndRelease();
