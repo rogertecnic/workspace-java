@@ -37,9 +37,9 @@ public class RaioDoRobo {
 		rodaE.setSpeed(300);
 		rodaD.setSpeed(300);
 		
-		int girosDaRoda = 4;
+		int girosDaRoda = 7; // raio do robo 6,6655cm
 		
-		rodaE.rotate(-360*girosDaRoda);
+		rodaE.rotate(-360*girosDaRoda, true);
 		rodaD.rotate(360*girosDaRoda);
 	}
 }

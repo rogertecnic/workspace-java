@@ -23,8 +23,8 @@ public class RaioDaRoda {
 		rodaE.setSpeed(300);// em graus/sec
 		rodaD.setSpeed(300);
 		
-		int giro = 4;
-		rodaE.rotate(360*giro);
+		int giro = 7; // 176,6 cm, o raio da roda é 4,0152 cm
+		rodaE.rotate(360*giro,true);
 		rodaD.rotate(360*giro);
 	}
 }

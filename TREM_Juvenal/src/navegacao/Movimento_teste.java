@@ -14,12 +14,13 @@ import lejos.utility.Delay;
 public class Movimento_teste {
 	EV3LargeRegulatedMotor rodaE;
 	EV3LargeRegulatedMotor rodaD;
-	double acc = 0.3; //m/s^2
-	double velo = 0.2; //m/s
+	double acc = 0.5; //m/s^2
+	double veloE = 0.2; //m/s
+	double veloD = 0.2049; //m/s
 	
-	double raioRoda = 0.04082; //m radio = diametro da roda div por 2, roda branca grandona
-	double larguraRobo = 0.139; //m largura ta certa
-	double espacoAcc = velo*velo/(2*acc); // espaco que a aceleracao dura
+	double raioRoda =  0.0401;//0.04082; //m radio = diametro da roda div por 2, roda branca grandona
+	double larguraRobo = 0.139; 
+	double espacoAcc = veloE*veloE/(2*acc); // espaco que a aceleracao dura
 	double posicaoDesaceleracao = 0;
 	
 	int Kp = 1;
@@ -27,7 +28,7 @@ public class Movimento_teste {
 	double PD = 0;
 	double erro = 0;
 	double erroAnt = 0;
-	int dt = 8; // tempo do PD em ms
+	int dt = 5; // tempo do PD em ms
 	
 	//debug
 	Stack<String> dados = new Stack<String>(); 
@@ -48,8 +49,8 @@ public class Movimento_teste {
 		erroAnt = 0;
 		rodaE.setAcceleration((int)(acc/raioRoda*180/3.1415));
 		rodaD.setAcceleration((int)(acc/raioRoda*180/3.1415));
-		rodaE.setSpeed((float)(velo/raioRoda*180/3.1415));
-		rodaD.setSpeed((float)(velo/raioRoda*180/3.1415));
+		rodaE.setSpeed((float)(veloE/raioRoda*180/3.1415));
+		rodaD.setSpeed((float)(veloD/raioRoda*180/3.1415));
 	}
 
 	/**
@@ -86,11 +87,12 @@ public class Movimento_teste {
 				Delay.msDelay(dt);
 				SD = Math.abs(rodaD.getTachoCount() - thetaDinicial)*3.1415/180*larguraRobo/2;
 				SE = Math.abs(rodaE.getTachoCount() - thetaEinicial)*3.1415/180*larguraRobo/2;
+				
 				erroAnt = erro;
 				erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
 				PD = Kp*erro + Kd*(erro - erroAnt)/dt;
-				rodaD.setSpeed((float) ((velo - PD)/raioRoda*180/3.1415) );
-				rodaE.setSpeed((float) ((velo + PD)/raioRoda*180/3.1415) );
+				rodaD.setSpeed((float) ((veloD - PD)/raioRoda*180/3.1415) );
+				rodaE.setSpeed((float) ((veloE + PD)/raioRoda*180/3.1415) );
 			}
 			
 			SD = rodaD.getTachoCount();
@@ -127,8 +129,8 @@ public class Movimento_teste {
 				erroAnt = erro;
 				erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
 				PD = Kp*erro + Kd*(erro - erroAnt)/dt;
-				rodaD.setSpeed((float) ((velo - PD)/raioRoda*180/3.1415) );
-				rodaE.setSpeed((float) ((velo + PD)/raioRoda*180/3.1415) );
+				rodaD.setSpeed((float) ((veloD - PD)/raioRoda*180/3.1415) );
+				rodaE.setSpeed((float) ((veloE + PD)/raioRoda*180/3.1415) );
 			}
 			SD = rodaD.getTachoCount();
 			SE = rodaE.getTachoCount();	
@@ -174,8 +176,8 @@ public class Movimento_teste {
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
 			dados.push("(" + erro*100 + "," + (System.currentTimeMillis()-time) + ")");
 			PD = Kp*erro + Kd*(erro - erroAnt)/dt;
-			rodaD.setSpeed((float) ((velo - PD+0.002)/raioRoda*180/3.1415) );
-			rodaE.setSpeed((float) ((velo + PD)/raioRoda*180/3.1415) );
+			rodaD.setSpeed((float) ((veloD - PD)/raioRoda*180/3.1415) );
+			rodaE.setSpeed((float) ((veloE + PD)/raioRoda*180/3.1415) );
 		}
 		
 		SD = rodaD.getTachoCount();
@@ -190,14 +192,7 @@ public class Movimento_teste {
 			SEant = SE;
 			SD = rodaD.getTachoCount();
 			SE = rodaE.getTachoCount();
-		}
-		while(!dados.isEmpty()){
-			ServerSocket.whrite(dados.pop());
-			Delay.msDelay(100);
-		}
-		Button.waitForAnyPress();
-		resetMotors();
-		
+		}		
 	}
 	
 	public void testarRaioDaRoda(){
@@ -211,7 +206,7 @@ public class Movimento_teste {
 	public static void main(String[] args){
 		Movimento_teste minhaclasse = new Movimento_teste();
 		//minhaclasse.testarRaioDaRoda();
-		minhaclasse.linhaReta(1);
+		minhaclasse.linhaReta(1.5);
 	}
 	
 }
