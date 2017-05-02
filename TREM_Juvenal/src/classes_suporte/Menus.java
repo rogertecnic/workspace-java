@@ -11,12 +11,12 @@ public class Menus {
 	private void mostraMenuLightOrDarkSide(int corDoBoss) {
 		LCD.clear();
 		switch(corDoBoss){
-		case 1:{
+		case Const.DARTH_VADER:{
 			LCD.drawString("RESGATAR QUAL BOSS?", 0, 0);
-			LCD.drawString("<PRETO - DARTK>", 0, 1);
+			LCD.drawString("<PRETO - DARTH>", 0, 1);
 			break;
 		}
-		case 2:{
+		case Const.LEIA:{
 			LCD.drawString("RESGATAR QUAL BOSS?", 0, 0);
 			LCD.drawString("<BRANCO - LEIA>", 0, 1);
 			break;
@@ -27,14 +27,14 @@ public class Menus {
 	private void mostraMenuIniciarPorOnde(int ladoDoDeProcura) {
 		LCD.clear();
 		switch(ladoDoDeProcura){
-		case 1:{
-			LCD.drawString("RESGATAR QUAL BOSS?", 0, 0);
-			LCD.drawString("PRETO - DARTK", 0, 1);
+		case Const.DIREITA:{
+			LCD.drawString("COMECAR QUAL LADO?", 0, 0);
+			LCD.drawString("<DIREITO>", 0, 1);
 			break;
 		}
-		case 2:{
-			LCD.drawString("RESGATAR QUAL BOSS?", 0, 0);
-			LCD.drawString("BRANCO - LEIA", 0, 1);
+		case Const.ESQUERDA:{
+			LCD.drawString("COMECAR QUAL LADO?", 0, 0);
+			LCD.drawString("<ESQUERDO>", 0, 1);
 			break;
 		}
 		}
@@ -95,6 +95,7 @@ public class Menus {
 			}
 			}
 		}
+		escolhaRealizada = false;
 	}
 	
 	public int getBoss(){

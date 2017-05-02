@@ -1,7 +1,9 @@
 package main_package;
 
 import lejos.hardware.Sound;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.utility.Delay;
+import navegacao.Movimento;
 
 /**
  * Thread gerenciadora de todo o codigo, controla a navegacao em geral, procurar, verificar boneco
@@ -11,18 +13,25 @@ import lejos.utility.Delay;
  */
 public class ThreadDaProva implements Runnable{
 	private int boss, ladoDeProcura;
+	private Movimento movimento;
 	
-	
-	public ThreadDaProva(int boss, int ladoDeProcura){
+	public ThreadDaProva(EV3LargeRegulatedMotor[] motores, int boss, int ladoDeProcura){
 		this.boss = boss;
 		this.ladoDeProcura = ladoDeProcura;
-		
-		
+		movimento = new Movimento(motores);
 	}
 	
 	@Override
 	public void run() {
-		// TODO fazer o codigo da thread principal
+		try{Delay.msDelay(500);
+		movimento.linhaReta(1.7, true);
+		
+		
+		
+		
+		}catch(ThreadDeath e){
+			e.getStackTrace();
+		}
 	}
 	
 	

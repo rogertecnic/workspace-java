@@ -16,9 +16,9 @@ public class Movimento {
 	private double erroAnt = 0;
 
 
-	public Movimento(){
-		rodaE = new EV3LargeRegulatedMotor(MotorPort.A);
-		rodaE = new EV3LargeRegulatedMotor(MotorPort.B);
+	public Movimento(EV3LargeRegulatedMotor[] motores){
+		rodaE = motores[0];
+		rodaD = motores[1];
 		resetMotors();
 	}
 
@@ -38,7 +38,7 @@ public class Movimento {
 	 * @param condicaoDeParada padrao TRUE, uma variavel boolean que, se caso por algum motivo externo ela
 	 * seja alterada para FALSE o robo para;
 	 */
-	public void linhaReta(int distancia,boolean condicaoDeParada){
+	public void linhaReta(double distancia,boolean condicaoDeParada){
 		if(Const.ESPACO_DE_ACC  < distancia/2)
 			posicaoDesaceleracao = distancia-Const.ESPACO_DE_ACC;
 		else

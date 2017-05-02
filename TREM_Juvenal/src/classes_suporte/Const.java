@@ -16,7 +16,7 @@ public class Const {
 	public static final double RAIO_ROBO = 0.139; 
 	public static final double ESPACO_DE_ACC = VELOCIDADE_E*VELOCIDADE_E/(2*ACC); // espaco que a aceleracao/desaceleracao dura
 	
-	public static final int Kp = 1;
-	public static final int Kd = 1;
+	public static final double Kp = 1;
+	public static final double Kd = 0.9;
 	public static final int dt = 5; // tempo do PD em ms
 }
