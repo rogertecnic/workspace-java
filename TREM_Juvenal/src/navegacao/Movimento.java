@@ -16,9 +16,9 @@ public class Movimento {
 	private double erroAnt = 0;
 
 
-	public Movimento(EV3LargeRegulatedMotor[] motores){
-		rodaE = motores[0];
-		rodaD = motores[1];
+	public Movimento(Object[] motores){
+		rodaE = (EV3LargeRegulatedMotor) motores[0];
+		rodaD = (EV3LargeRegulatedMotor) motores[1];
 		resetMotors();
 	}
 

@@ -13,7 +13,8 @@ public class Const {
 	public static final double VELOCIDADE_D = 0.2049; //m/s
 
 	public static final double RAIO_RODA =  0.0401;
-	public static double RAIO_ROBO = 0.065;//0.0647 para o robo sem boneco
+	public static double RAIO_ROBO = 0.0646;//0.0647(semboneco) 0.065(comboneco)
+	//TODO alterar o valor do raio do robo quando este pegar um boneco
 	public static final double ESPACO_DE_ACC = VELOCIDADE_E*VELOCIDADE_E/(2*ACC); // espaco que a aceleracao/desaceleracao dura
 	
 	public static final double Kp = 1;

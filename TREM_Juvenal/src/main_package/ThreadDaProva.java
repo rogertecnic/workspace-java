@@ -2,6 +2,7 @@ package main_package;
 
 import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.utility.Delay;
@@ -16,6 +17,7 @@ import navegacao.Movimento;
 public class ThreadDaProva implements Runnable{
 	private int boss, ladoDeProcura;
 	private Movimento movimento;
+	private Garra garra;
 	private UltraSom sensorUS;
 	private SensorCorBoneco corBoneco;
 	private SensorCorChao corChao;
@@ -29,17 +31,21 @@ public class ThreadDaProva implements Runnable{
 	public ThreadDaProva(Object[] componentes, int boss, int ladoDeProcura){
 		this.boss = boss;
 		this.ladoDeProcura = ladoDeProcura;
-		movimento = new Movimento((EV3LargeRegulatedMotor[]) componentes);
-		//sensorUS = new UltraSom((EV3UltrasonicSensor)componentes[2]);
-		corBoneco = new SensorCorBoneco((EV3ColorSensor)componentes[3]);
-		//corChao = new SensorCorChao((EV3ColorSensor)componentes[4]);
+		movimento = new Movimento(componentes);
+		garra = new Garra((EV3MediumRegulatedMotor) componentes[2]);
+		sensorUS = new UltraSom((EV3UltrasonicSensor)componentes[3]);
+		//corBoneco = new SensorCorBoneco((EV3ColorSensor)componentes[4]);
+		//corChao = new SensorCorChao((EV3ColorSensor)componentes[5]);
 	}
 	
 	@Override
 	public void run() {
-		try{Delay.msDelay(500);
-		
-		
+		try{
+			//victorySong();
+			Delay.msDelay(500);
+		garra.abreGarra();
+		//sensorUS.testaUS();
+		//corChao.testaSensorChao();
 		//movimento.girar(90, true);
 		//movimento.linhaReta(1.7, true);
 		

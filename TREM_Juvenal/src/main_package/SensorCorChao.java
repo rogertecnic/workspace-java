@@ -13,7 +13,7 @@ public class SensorCorChao {
 		while(true){
 			float[] corSample = new float[3];
 			sensorCor.getRGBMode().fetchSample(corSample, 0);
-			System.out.printf("R:%.3f G:%.3f B:%.3f",corSample[0], corSample[1], corSample[2]);
+			System.out.printf("%.1f;%.1f;%.1f\n",corSample[0]*10, corSample[1]*10, corSample[2]*10);
 		}
 	}
 }
