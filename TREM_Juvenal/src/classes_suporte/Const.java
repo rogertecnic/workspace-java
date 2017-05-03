@@ -5,6 +5,10 @@ public class Const {
 	//================= CTE DE INICIO DE BUSCA==========
 	public static final int DARTH_VADER = 1;
 	public static final int LEIA = 2;
+	public static final int PRETO = 1;
+	public static final int BRANCO = 2;
+	public static final int VERMELHO = 11;
+	public static final int VERDE = 12;
 	public static final int ESQUERDA = 3;
 	public static final int DIREITA = 4;
 

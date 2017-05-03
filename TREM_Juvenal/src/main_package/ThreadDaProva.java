@@ -28,23 +28,25 @@ public class ThreadDaProva implements Runnable{
 	 * @param boss constante que define qual boss vamos procurar
 	 * @param ladoDeProcura constante que define por onde vamos comecar
 	 */
-	public ThreadDaProva(Object[] componentes, int boss, int ladoDeProcura){
+	public ThreadDaProva(Object[] componentes, int boss, int ladoDeProcura, boolean calibrado){
 		this.boss = boss;
 		this.ladoDeProcura = ladoDeProcura;
 		movimento = new Movimento(componentes);
 		garra = new Garra((EV3MediumRegulatedMotor) componentes[2]);
 		sensorUS = new UltraSom((EV3UltrasonicSensor)componentes[3]);
-		//corBoneco = new SensorCorBoneco((EV3ColorSensor)componentes[4]);
-		//corChao = new SensorCorChao((EV3ColorSensor)componentes[5]);
+		corBoneco = (SensorCorBoneco)componentes[4];
+		corChao =(SensorCorChao)componentes[5];
 	}
 	
 	@Override
 	public void run() {
 		try{
+			
 			//victorySong();
 			Delay.msDelay(500);
-		garra.abreGarra();
+		//garra.abreGarra();
 		//sensorUS.testaUS();
+			//corBoneco.testaSensorBoneco();
 		//corChao.testaSensorChao();
 		//movimento.girar(90, true);
 		//movimento.linhaReta(1.7, true);
@@ -56,7 +58,6 @@ public class ThreadDaProva implements Runnable{
 			e.getStackTrace();
 		}
 	}
-	
 	
 	
 	

@@ -9,6 +9,7 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.utility.Delay;
 
 public class MainClass {
 	@SuppressWarnings("deprecation")
@@ -17,22 +18,26 @@ public class MainClass {
 		EV3LargeRegulatedMotor rodaD = new EV3LargeRegulatedMotor(MotorPort.B);
 		EV3MediumRegulatedMotor garra = new EV3MediumRegulatedMotor(MotorPort.C);
 		EV3UltrasonicSensor sensorUltrassom  = new EV3UltrasonicSensor(SensorPort.S1);
-		//EV3ColorSensor sensorCorBoneco = new EV3ColorSensor(SensorPort.S2);
-		//EV3ColorSensor sensorCorChao = new EV3ColorSensor(SensorPort.S3);
+		SensorCorBoneco corBoneco = new SensorCorBoneco(new EV3ColorSensor(SensorPort.S2));
+		SensorCorChao corChao = new SensorCorChao(new EV3ColorSensor(SensorPort.S3));
 		
-		Object[] componentes = {rodaE, rodaD, garra,sensorUltrassom,null, null};
-		//Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, sensorCorBoneco, sensorCorChao};
+		boolean calibrado = false;
+		//Object[] componentes = {rodaE, rodaD, garra,sensorUltrassom,null, null};
+		Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, corBoneco, corChao};
+		corBoneco.calibraCor();
 		
 		Menus menus = new Menus();
 
 		
 		while(true){
 			menus.mostraMenus();
-
-			Thread threadBusca = new Thread(new ThreadDaProva(componentes, menus.getBoss(), menus.getLadoDeProcura()), "thread de execucao da prova");
+			ThreadDaProva runnable = new ThreadDaProva(componentes, menus.getBoss(), menus.getLadoDeProcura(), calibrado);
+			Thread threadBusca = new Thread(runnable, "thread de execucao da prova");
 			
 			threadBusca.setDaemon(true);
 			threadBusca.start();
+
+			
 			Button.ENTER.waitForPressAndRelease();
 			rodaE.stop(true);
 			rodaD.stop(true);
