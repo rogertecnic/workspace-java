@@ -2,6 +2,8 @@ package main_package;
 
 import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.utility.Delay;
 import navegacao.Movimento;
 
@@ -14,17 +16,32 @@ import navegacao.Movimento;
 public class ThreadDaProva implements Runnable{
 	private int boss, ladoDeProcura;
 	private Movimento movimento;
+	private UltraSom sensorUS;
+	private SensorCorBoneco corBoneco;
+	private SensorCorChao corChao;
 	
-	public ThreadDaProva(EV3LargeRegulatedMotor[] motores, int boss, int ladoDeProcura){
+	/**
+	 * Instancia o Runnable para a thread principal da prova
+	 * @param componentes motorE, motorD, ultrassom, corBoneco, corChao;
+	 * @param boss constante que define qual boss vamos procurar
+	 * @param ladoDeProcura constante que define por onde vamos comecar
+	 */
+	public ThreadDaProva(Object[] componentes, int boss, int ladoDeProcura){
 		this.boss = boss;
 		this.ladoDeProcura = ladoDeProcura;
-		movimento = new Movimento(motores);
+		movimento = new Movimento((EV3LargeRegulatedMotor[]) componentes);
+		//sensorUS = new UltraSom((EV3UltrasonicSensor)componentes[2]);
+		corBoneco = new SensorCorBoneco((EV3ColorSensor)componentes[3]);
+		//corChao = new SensorCorChao((EV3ColorSensor)componentes[4]);
 	}
 	
 	@Override
 	public void run() {
 		try{Delay.msDelay(500);
-		movimento.linhaReta(1.7, true);
+		
+		
+		//movimento.girar(90, true);
+		//movimento.linhaReta(1.7, true);
 		
 		
 		

@@ -92,10 +92,10 @@ public class Movimento {
 
 		graus = graus*3.1415/180;
 		double Sgiro = Math.abs(graus*Const.RAIO_ROBO);
-		if(espacoAcc < Sgiro)
-			espacoAcc = Sgiro-espacoAcc;
+		if(espacoAcc < Sgiro/2)
+			posicaoDesaceleracao = Sgiro-espacoAcc;
 		else
-			espacoAcc = Sgiro/2;
+			posicaoDesaceleracao = Sgiro/2;
 
 		if(graus > 0){		 	// anti-horario
 			rodaE.backward();
@@ -105,10 +105,10 @@ public class Movimento {
 			rodaE.forward();
 		}
 
-		while(SD<espacoAcc || SE <espacoAcc){
+		while(SD<posicaoDesaceleracao || SE <posicaoDesaceleracao){
 			Delay.msDelay(Const.dt);
-			SD = Math.abs(rodaD.getTachoCount() - thetaDinicial)*3.1415/180*Const.RAIO_ROBO;
-			SE = Math.abs(rodaE.getTachoCount() - thetaEinicial)*3.1415/180*Const.RAIO_ROBO;
+			SD = Math.abs(rodaD.getTachoCount() - thetaDinicial)*3.1415/180*Const.RAIO_RODA;
+			SE = Math.abs(rodaE.getTachoCount() - thetaEinicial)*3.1415/180*Const.RAIO_RODA;
 
 			erroAnt = erro;
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
@@ -121,10 +121,10 @@ public class Movimento {
 		SE = rodaE.getTachoCount();	
 		double SDant = 0;
 		double SEant = 0;
+		rodaE.stop(true);
+		rodaD.stop(true);
 		while(SD != SDant || SE != SEant){
-			rodaE.stop(true);
-			rodaD.stop(true);
-			Delay.msDelay(30);
+			Delay.msDelay(20);
 			SDant = SD;
 			SEant = SE;
 			SD = rodaD.getTachoCount();
