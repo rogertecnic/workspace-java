@@ -7,6 +7,9 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.utility.Delay;
 import navegacao.Movimento;
+import sensores.SensorCorBoneco;
+import sensores.SensorCorChao;
+import sensores.UltraSom;
 
 /**
  * Thread gerenciadora de todo o codigo, controla a navegacao em geral, procurar, verificar boneco
@@ -43,7 +46,8 @@ public class ThreadDaProva implements Runnable{
 		try{
 			
 			//victorySong();
-			Delay.msDelay(500);
+			Delay.msDelay(100000);
+			//procurarEsquerda();
 		//garra.abreGarra();
 		//sensorUS.testaUS();
 			//corBoneco.testaSensorBoneco();
@@ -74,6 +78,17 @@ public class ThreadDaProva implements Runnable{
 		Delay.msDelay(80);
 		Sound.playTone(3000, 200);
 		Sound.playTone(5000, 500);
+	}
+	
+	public void procurarEsquerda(){
+		garra.abreGarra();
+		movimento.linhaReta(0.2, true);
+		//garra.fechaGarra();
+		movimento.girar(-90, true);
+		movimento.andarRe(0.8);
+		movimento.linhaReta(0.2, true);
+		movimento.girar(90, true);
+		movimento.linhaReta(0.8, true);
 	}
 
 }

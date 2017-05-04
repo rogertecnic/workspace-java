@@ -11,8 +11,7 @@ public class Garra {
 	}
 	
 	/**
-	 * verifica se a garra esta aberta ou fechada
-	 * @return TRUE se a garra estiver fechada, FALSE se aberta
+	 * abre a garra totalmente
 	 */
 	public void abreGarra(){
 		garra.setStallThreshold(10, 200);
@@ -24,4 +23,13 @@ public class Garra {
 		garra.rotate(-4);
 		}
 	
+	public void fechaGarra(){
+		garra.setStallThreshold(10, 200);
+		garra.setSpeed(130);
+		garra.rotate(8000);
+		System.out.println(garra.isStalled());
+		garra.flt();
+		Delay.msDelay(60);
+		garra.rotate(6);
+	}
 }

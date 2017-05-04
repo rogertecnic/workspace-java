@@ -82,6 +82,8 @@ public class Movimento {
 	/**
 	 * o robo gira em torno do seu proprio eixo
 	 * @param graus positivo anti-horario, negativo horario
+	 * @param condicaoDeParada padrao TRUE, uma variavel boolean que, se caso por algum motivo externo ela
+	 * seja alterada para FALSE o robo para;
 	 */
 	public void girar(double graus, boolean condicaoDeParada){
 		double SD = 0;
@@ -130,5 +132,11 @@ public class Movimento {
 			SD = rodaD.getTachoCount();
 			SE = rodaE.getTachoCount();
 		}
+	}
+	
+	public void andarRe(double distancia){
+		double theta = distancia/Const.RAIO_RODA*(180/3.141592);
+		rodaE.rotate(-(int)theta, true);
+		rodaD.rotate(-(int)theta);	
 	}
 }

@@ -11,6 +11,9 @@ public class Const {
 	public static final int VERDE = 12;
 	public static final int ESQUERDA = 3;
 	public static final int DIREITA = 4;
+	
+	public static final float US_MIN = 0.03f;
+	public static final float US_MAX = 0.2f;
 
 	public static final double ACC = 0.5; //m/s^2
 	public static final double VELOCIDADE_E = 0.2; //m/s

@@ -10,6 +10,8 @@ import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.utility.Delay;
+import sensores.SensorCorBoneco;
+import sensores.SensorCorChao;
 
 public class MainClass {
 	@SuppressWarnings("deprecation")
@@ -24,9 +26,9 @@ public class MainClass {
 		boolean calibrado = false;
 		//Object[] componentes = {rodaE, rodaD, garra,sensorUltrassom,null, null};
 		Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, corBoneco, corChao};
-		corBoneco.calibraCor();
+		//corBoneco.calibraCor();
 		
-		 corBoneco.verificaCorBoneco();
+		 //corBoneco.verificaCorBoneco();
 		Menus menus = new Menus();
 
 		
