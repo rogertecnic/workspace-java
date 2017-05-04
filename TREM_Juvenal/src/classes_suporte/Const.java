@@ -27,4 +27,7 @@ public class Const {
 	public static final double Kp = 1;
 	public static final double Kd = 1;
 	public static final int dt = 5; // tempo do PD em ms
+	
+	public static final int SENSOR_COR = 8;
+	public static final int SENSOR_US = 9;
 }

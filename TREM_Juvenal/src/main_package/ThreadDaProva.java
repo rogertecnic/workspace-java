@@ -1,5 +1,6 @@
 package main_package;
 
+import classes_suporte.Const;
 import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
@@ -81,20 +82,64 @@ public class ThreadDaProva implements Runnable{
 	}
 	
 	public void procurarEsquerda(){
+		double jaAndou = 0;
 		garra.abreGarra();
-		movimento.linhaReta(0.2, false, sensorUS);
-		//garra.fechaGarra();
+		movimento.linhaReta(0.1, false, sensorUS);
 		movimento.girar(-90);
 		movimento.andarRe(0.8);
 		movimento.linhaReta(0.15, false, sensorUS);
 		movimento.girar(90);
-		double jaAndou = movimento.linhaReta(0.8,true, sensorUS);
-		if(jaAndou < (0.8 - 0.01)){ // boneco foi detectado
+		
+		//Primeiro movimento pela esquerda
+		jaAndou += movimento.linhaReta(1,true, sensorUS);
+		if(jaAndou < (1 - 0.01)){ // boneco foi detectado
 			victorySong();
 			double distBoneco = sensorUS.getDistBoneco();
 			movimento.linhaReta(distBoneco, false, sensorUS);
 			garra.fechaGarra();
-			corBoneco.verificaCorBoneco();
+			int bonecoNaGarra = corBoneco.verificaCorBoneco();
+			if(ladoDeProcura == Const.DARTH_VADER){
+				if(bonecoNaGarra == Const.VERMELHO){
+					//TODO resgata
+				}else{
+					//TODO tira do caminho
+				}
+			}else{
+				if(bonecoNaGarra == Const.VERDE){
+					//TODO resgata
+				}else{
+					//TODO tira do caminho
+				}
+			}
+		}
+		
+		movimento.linhaReta(0.1, false, sensorUS);
+		movimento.girar(-90);
+		movimento.andarRe(0.25);
+		movimento.linhaReta(0.15, false, sensorUS);
+		movimento.girar(90);
+		
+		//segundo movimento pela esquerda
+		jaAndou += movimento.linhaReta(1,true, sensorUS);
+		if(jaAndou < (1 - 0.01)){ // boneco foi detectado
+			victorySong();
+			double distBoneco = sensorUS.getDistBoneco();
+			movimento.linhaReta(distBoneco, false, sensorUS);
+			garra.fechaGarra();
+			int bonecoNaGarra = corBoneco.verificaCorBoneco();
+			if(ladoDeProcura == Const.DARTH_VADER){
+				if(bonecoNaGarra == Const.VERMELHO){
+					//TODO resgata
+				}else{
+					//TODO tira do caminho
+				}
+			}else{
+				if(bonecoNaGarra == Const.VERDE){
+					//TODO resgata
+				}else{
+					//TODO tira do caminho
+				}
+			}
 		}
 	}
 

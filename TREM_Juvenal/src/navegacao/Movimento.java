@@ -4,6 +4,7 @@ import classes_suporte.Const;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.utility.Delay;
+import sensores.SensorCorChao;
 import sensores.UltraSom;
 
 public class Movimento {
@@ -35,13 +36,16 @@ public class Movimento {
 	/**
 	 * Anda em linha reta, procurando bonecos ou nao
 	 * @param distancia distancia q ele vai andar
-	 * @param detectaBoneco true para andar procurando
+	 * @param detectaBoneco 0 n detecta, Const.SENSOR_COR detecta pelo chao, Const.SENSOR_US detecta boneco
 	 * @param sensorUS referencia para o sensor para ficar pesquisando se tem ou nao boneco
 	 * @return retorna a distancia que ele andou ate parar
 	 */
-	public double linhaReta(double distancia,boolean detectaBoneco, UltraSom sensorUS){
+	public double linhaReta(double distancia,int detectaBoneco, SensorCorChao sensorChao, UltraSom sensorUS){
 		boolean condicaoDeParada = false;
-		if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
+		if(!condicaoDeParada)
+			if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
+			else //TODO fazer a condicao de parada para o sensor de cor do chao
+
 		
 		if(Const.ESPACO_DE_ACC  < distancia/2)
 			posicaoDesaceleracao = distancia-Const.ESPACO_DE_ACC;
@@ -57,7 +61,7 @@ public class Movimento {
 		rodaD.forward();
 
 		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (!condicaoDeParada)){// controle
-			if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
+			if(detectaBoneco == Const.SENSOR_US && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
 			Delay.msDelay(Const.dt);
 			SD = (rodaD.getTachoCount() - thetaDinicial)*3.1415/180*Const.RAIO_RODA;
 			SE = (rodaE.getTachoCount() - thetaEinicial)*3.1415/180*Const.RAIO_RODA;
@@ -76,7 +80,7 @@ public class Movimento {
 		rodaE.stop(true);
 		rodaD.stop(true);
 		while((thetaD != thetaDant || thetaE != thetaEant) && (!condicaoDeParada)){// parando o robo
-			if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
+			if(detectaBoneco == Const.SENSOR_US && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
 			Delay.msDelay(20);
 			thetaDant = thetaD;
 			thetaEant = thetaE;
