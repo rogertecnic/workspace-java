@@ -26,6 +26,7 @@ public class MainClass {
 		Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, corBoneco, corChao};
 		corBoneco.calibraCor();
 		
+		 corBoneco.verificaCorBoneco();
 		Menus menus = new Menus();
 
 		
