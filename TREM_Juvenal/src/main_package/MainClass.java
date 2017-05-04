@@ -26,7 +26,7 @@ public class MainClass {
 		boolean calibrado = false;
 		//Object[] componentes = {rodaE, rodaD, garra,sensorUltrassom,null, null};
 		Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, corBoneco, corChao};
-		//corBoneco.calibraCor();
+		corBoneco.calibraCor();
 		
 		 //corBoneco.verificaCorBoneco();
 		Menus menus = new Menus();

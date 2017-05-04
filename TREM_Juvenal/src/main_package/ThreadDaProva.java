@@ -46,8 +46,8 @@ public class ThreadDaProva implements Runnable{
 		try{
 			
 			//victorySong();
-			Delay.msDelay(100000);
-			//procurarEsquerda();
+			Delay.msDelay(1000);
+			procurarEsquerda();
 		//garra.abreGarra();
 		//sensorUS.testaUS();
 			//corBoneco.testaSensorBoneco();
@@ -82,13 +82,20 @@ public class ThreadDaProva implements Runnable{
 	
 	public void procurarEsquerda(){
 		garra.abreGarra();
-		movimento.linhaReta(0.2, true);
+		movimento.linhaReta(0.2, false, sensorUS);
 		//garra.fechaGarra();
-		movimento.girar(-90, true);
+		movimento.girar(-90);
 		movimento.andarRe(0.8);
-		movimento.linhaReta(0.2, true);
-		movimento.girar(90, true);
-		movimento.linhaReta(0.8, true);
+		movimento.linhaReta(0.15, false, sensorUS);
+		movimento.girar(90);
+		double jaAndou = movimento.linhaReta(0.8,true, sensorUS);
+		if(jaAndou < (0.8 - 0.01)){ // boneco foi detectado
+			victorySong();
+			double distBoneco = sensorUS.getDistBoneco();
+			movimento.linhaReta(distBoneco, false, sensorUS);
+			garra.fechaGarra();
+			corBoneco.verificaCorBoneco();
+		}
 	}
 
 }

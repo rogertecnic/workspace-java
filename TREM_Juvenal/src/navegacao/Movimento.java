@@ -4,6 +4,7 @@ import classes_suporte.Const;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.utility.Delay;
+import sensores.UltraSom;
 
 public class Movimento {
 	private EV3LargeRegulatedMotor rodaE;
@@ -32,13 +33,16 @@ public class Movimento {
 	}
 
 	/**
-	 * Robo anda em linha reta.
-	 * @param distancia distancia que o robo vai andar, em metros por que o raio da roda e o raio
-	 * do robo estao em metro
-	 * @param condicaoDeParada padrao TRUE, uma variavel boolean que, se caso por algum motivo externo ela
-	 * seja alterada para FALSE o robo para;
+	 * Anda em linha reta, procurando bonecos ou nao
+	 * @param distancia distancia q ele vai andar
+	 * @param detectaBoneco true para andar procurando
+	 * @param sensorUS referencia para o sensor para ficar pesquisando se tem ou nao boneco
+	 * @return retorna a distancia que ele andou ate parar
 	 */
-	public void linhaReta(double distancia,boolean condicaoDeParada){
+	public double linhaReta(double distancia,boolean detectaBoneco, UltraSom sensorUS){
+		boolean condicaoDeParada = false;
+		if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
+		
 		if(Const.ESPACO_DE_ACC  < distancia/2)
 			posicaoDesaceleracao = distancia-Const.ESPACO_DE_ACC;
 		else
@@ -52,11 +56,12 @@ public class Movimento {
 		rodaE.forward();
 		rodaD.forward();
 
-		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (condicaoDeParada)){// controle
+		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (!condicaoDeParada)){// controle
+			if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
 			Delay.msDelay(Const.dt);
 			SD = (rodaD.getTachoCount() - thetaDinicial)*3.1415/180*Const.RAIO_RODA;
 			SE = (rodaE.getTachoCount() - thetaEinicial)*3.1415/180*Const.RAIO_RODA;
-
+			System.out.println(SD);
 			erroAnt = erro;
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que rada roda esta fazendo
 			PD = Const.Kp*erro + Const.Kd*(erro - erroAnt)/Const.dt;
@@ -64,19 +69,21 @@ public class Movimento {
 			rodaE.setSpeed((float) ((Const.VELOCIDADE_E + PD)/Const.RAIO_RODA*180/3.1415) );
 		}
 
-		SD = rodaD.getTachoCount();
-		SE = rodaE.getTachoCount();
-		double SDant = 0;
-		double SEant = 0;
+		double thetaD = rodaD.getTachoCount();
+		double thetaE = rodaE.getTachoCount();
+		double thetaDant = 0;
+		double thetaEant = 0;
 		rodaE.stop(true);
 		rodaD.stop(true);
-		while((SD != SDant || SE != SEant) && (condicaoDeParada)){// parando o robo
+		while((thetaD != thetaDant || thetaE != thetaEant) && (!condicaoDeParada)){// parando o robo
+			if(detectaBoneco && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
 			Delay.msDelay(20);
-			SDant = SD;
-			SEant = SE;
-			SD = rodaD.getTachoCount();
-			SE = rodaE.getTachoCount();
-		}		
+			thetaDant = thetaD;
+			thetaEant = thetaE;
+			thetaD = rodaD.getTachoCount();
+			thetaE = rodaE.getTachoCount();
+		}	
+		return SD+Const.ESPACO_DE_ACC;
 	}
 
 	/**
@@ -85,7 +92,7 @@ public class Movimento {
 	 * @param condicaoDeParada padrao TRUE, uma variavel boolean que, se caso por algum motivo externo ela
 	 * seja alterada para FALSE o robo para;
 	 */
-	public void girar(double graus, boolean condicaoDeParada){
+	public void girar(double graus){
 		double SD = 0;
 		double SE = 0;
 

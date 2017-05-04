@@ -28,8 +28,8 @@ public class Garra {
 		garra.setSpeed(130);
 		garra.rotate(8000);
 		System.out.println(garra.isStalled());
-		garra.flt();
-		Delay.msDelay(60);
-		garra.rotate(6);
+		//garra.flt();
+		//Delay.msDelay(60);
+		//garra.rotate(6);
 	}
 }

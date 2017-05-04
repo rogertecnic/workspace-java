@@ -9,6 +9,7 @@ public class UltraSom {
 	private Thread listenner;
 	protected boolean bonecoDetectado = false;
 	private float [] distSample = new float[1];
+	private double distBonecoDetectado = 0;
 	
 	public UltraSom(EV3UltrasonicSensor ultrassom){
 		this.ultrassom = ultrassom;
@@ -25,13 +26,19 @@ public class UltraSom {
 	
 	protected void detectaBoneco(){
 		ultrassom.getDistanceMode().fetchSample(distSample, 0);
-		if(distSample[0] > Const.US_MIN && distSample[0] < Const.US_MAX)
+		if(distSample[0] > Const.US_MIN && distSample[0] < Const.US_MAX){
 			bonecoDetectado = true;
+		distBonecoDetectado = (double)distSample[0];
+		}
 		else bonecoDetectado = false;
 	}
 	
 	public boolean getBonecoDetectado(){
 		return bonecoDetectado;
+	}
+	
+	public double getDistBoneco(){
+		return distBonecoDetectado;
 	}
 }
 
@@ -47,7 +54,7 @@ class USRunnable implements Runnable{
 		while(true){
 			Delay.msDelay(10);
 			ultrassom.detectaBoneco();
-			System.out.println(ultrassom.getBonecoDetectado());
+			//System.out.println(ultrassom.getBonecoDetectado());
 		}
 	}
 }
