@@ -33,6 +33,8 @@ public class Movimento {
 	}
 
 	private void resetMotorsBuscaNoGiro(){
+		rodaE.resetTachoCount();
+		rodaD.resetTachoCount();
 		rodaE.setAcceleration((int)(Const.ACC_GIRO/Const.RAIO_RODA*180/3.1415));
 		rodaD.setAcceleration((int)(Const.ACC_GIRO/Const.RAIO_RODA*180/3.1415));
 		rodaE.setSpeed((float)(Const.VELOCIDADE_GIRO/Const.RAIO_RODA*180/3.1415));
@@ -47,6 +49,7 @@ public class Movimento {
 	 * @return retorna a distancia que ele andou ate parar
 	 */
 	public double linhaReta(double distancia,int detectaBoneco, SensorCorChao sensorChao, UltraSom sensorUS){
+		Delay.msDelay(50);
 		boolean condicaoDeParada = false;
 		if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
 		else if(detectaBoneco == Const.SENSOR_COR){}; //TODO fazer a condicao de parada para o sensor de cor do chao
@@ -103,6 +106,7 @@ public class Movimento {
 	 * seja alterada para FALSE o robo para;
 	 */
 	public int girar(double graus, UltraSom sensorUS){
+		Delay.msDelay(50);
 		boolean condicaoDeParada = false;
 		double SD = 0;
 		double SE = 0;

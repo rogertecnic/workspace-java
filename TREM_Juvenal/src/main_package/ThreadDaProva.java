@@ -6,6 +6,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.sensor.MindsensorsDistanceSensorV2;
 import lejos.utility.Delay;
 import navegacao.Movimento;
 import sensores.SensorCorBoneco;
@@ -25,7 +26,7 @@ public class ThreadDaProva implements Runnable{
 	private UltraSom sensorUS;
 	private SensorCorBoneco corBoneco;
 	private SensorCorChao corChao;
-	private int direcaoDoRoboNoModuloDeInicio = Const.FRENTE;
+	private int direcaoDoRobo = Const.FRENTE;
 
 	/**
 	 * Instancia o Runnable para a thread principal da prova
@@ -46,6 +47,7 @@ public class ThreadDaProva implements Runnable{
 	@Override
 	public void run() {
 		try{
+			Const.RAIO_ROBO = 0.0646; // sem boneco
 			garra.abreGarra();
 
 			procurarEsquerda();
@@ -87,107 +89,60 @@ public class ThreadDaProva implements Runnable{
 
 	private void procurarEsquerda(){
 		double jaAndou = 0;
-		garra.abreGarra();
-		if(direcaoDoRoboNoModuloDeInicio == Const.FRENTE){
+		if(direcaoDoRobo == Const.FRENTE){
 			movimento.linhaReta(0.1, 0, null, null);
 			movimento.girar(-90, null);
 		}
 		movimento.andarRe(Const.DIST_MODULO_RESGATE+0.1);
 		movimento.linhaReta(0.1, 0, null, null);
 		movimento.girar(90, null);
-		movimento.andarRe(0.2);
+		movimento.andarRe(0.35);
 
-		//Primeiro movimento pela esquerda, anda 1 metro
-		jaAndou += movimento.linhaReta(1,Const.SENSOR_US, null, sensorUS);
-		if(jaAndou < (1 - 0.01)){ // boneco foi detectado
-			double distBoneco = sensorUS.getDistBoneco();
-			movimento.linhaReta(distBoneco, 0, null, null);
-			garra.fechaGarra();
-			int bonecoNaGarra = corBoneco.verificaCorBoneco();
-			if(boss == Const.DARTH_VADER){
-				if(bonecoNaGarra == Const.VERMELHO){
-					resgataBonecoEsquerda(jaAndou);
-					return;
-				}else{
-					//TODO tira do caminho
-				}
-			}else{
-				if(bonecoNaGarra == Const.VERDE){
-					resgataBonecoEsquerda(jaAndou);
-					return;
-				}else{
-					//TODO tira do caminho
-				}
-			}
-		}
 
-		//alinha para o proximo movimento
-		movimento.girar(-90, null);
-		movimento.andarRe(0.25);
-		movimento.linhaReta(0.1,0, null, null);
-		movimento.girar(90, null);
-
-		//segundo movimento pela esquerda 2 metros
-		jaAndou += movimento.linhaReta(1,Const.SENSOR_US, null, sensorUS);
-		if(jaAndou < (2 - 0.01)){ // boneco foi detectado
-			double distBoneco = sensorUS.getDistBoneco();
-			movimento.linhaReta(distBoneco, 0, null, null);
-			garra.fechaGarra();
-			int bonecoNaGarra = corBoneco.verificaCorBoneco();
-			if(boss == Const.DARTH_VADER){
-				if(bonecoNaGarra == Const.VERMELHO){
-					resgataBonecoEsquerda(jaAndou);
-					return;
+		while(jaAndou < 2.63){
+			//Primeiro movimento pela esquerda, anda 1 metro
+			double jaAndouAnt = jaAndou;
+			jaAndou += movimento.linhaReta((2.65/3),Const.SENSOR_US, null, sensorUS);
+			if(jaAndou < (jaAndouAnt+2.65/3 - 0.01)){ // boneco foi detectado
+				double distBoneco = sensorUS.getDistBoneco();
+				movimento.linhaReta(distBoneco, 0, null, null);
+				movimento.andarRe(0.03);
+				garra.fechaGarra();
+				int bonecoNaGarra = corBoneco.verificaCorBoneco();
+				if(boss == Const.DARTH_VADER){
+					if(bonecoNaGarra == Const.VERMELHO){
+						resgataBonecoEsquerda(jaAndou);
+						return;
+					}else{
+						tiraBonecoEsquerda();
+					}
 				}else{
-					//TODO tira do caminho
-				}
-			}else{
-				if(bonecoNaGarra == Const.VERDE){
-					resgataBonecoEsquerda(jaAndou);
-					return;
-				}else{
-					//TODO tira do caminho
+					if(bonecoNaGarra == Const.VERDE){
+						resgataBonecoEsquerda(jaAndou);
+						return;
+					}else{
+						tiraBonecoEsquerda();
+					}
 				}
 			}
-		}
 
-		//alinha para o proximo movimento
-		movimento.girar(-90, null);
-		movimento.andarRe(0.25);
-		movimento.linhaReta(0.1,0, null, null);
-		movimento.girar(90, null);
-
-
-		//terceiro movimento pela esquerda final
-		jaAndou += movimento.linhaReta(0.65,Const.SENSOR_US, null, sensorUS); //TODO verificar essa ultima distancia
-		if(jaAndou < (0.65 - 0.01)){ // boneco foi detectado
-			double distBoneco = sensorUS.getDistBoneco();
-			movimento.linhaReta(distBoneco, 0, null, null);
-			garra.fechaGarra();
-			int bonecoNaGarra = corBoneco.verificaCorBoneco();
-			if(boss == Const.DARTH_VADER){
-				if(bonecoNaGarra == Const.VERMELHO){
-					resgataBonecoEsquerda(jaAndou);
-					return;
-				}else{
-					//TODO tira do caminho
-				}
-			}else{
-				if(bonecoNaGarra == Const.VERDE){
-					resgataBonecoEsquerda(jaAndou);
-					return;
-				}else{
-					//TODO tira do caminho
-				}
+			//alinha para o proximo movimento
+			if(jaAndou < 2.63){
+				if( direcaoDoRobo == Const.FRENTE)
+					movimento.girar(-90, null);
+				movimento.andarRe(0.35);
+				movimento.linhaReta(0.1,0, null, null);
+				movimento.girar(90, null);
+				direcaoDoRobo = Const.FRENTE;
 			}
 		}
 
 		// preparar pra pegar o boss
 		movimento.girar(-180, null);
-		movimento.andarRe(0.25);
+		movimento.andarRe(0.35);
 		movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
 		movimento.girar(90, null);
-		movimento.andarRe(0.25);
+		movimento.andarRe(0.3);
 		movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
 
 		// procurar boneco no circulo preto
@@ -199,14 +154,11 @@ public class ThreadDaProva implements Runnable{
 			case 0:
 				anguloDoBoneco = movimento.girar(Const.ANGULO_DE_PROCURA, sensorUS);
 				if(anguloDoBoneco > Const.ANGULO_DE_PROCURA-6){ //TODO testar esse angulo de busca
-					//System.out.println("deu bom" + anguloDoBoneco); // printou 124
-					
 					tmp++;
 				}else{
-					//System.out.println("entrou errado");
 					tmp = 4;
 				}
-			break;
+				break;
 			case 1:
 				anguloDoBoneco = anguloDoBoneco - movimento.girar(-Const.ANGULO_DE_PROCURA*2, sensorUS);
 				if(anguloDoBoneco < -Const.ANGULO_DE_PROCURA+6){ //TODO testar esse angulo de busca
@@ -233,8 +185,12 @@ public class ThreadDaProva implements Runnable{
 		int bonecoNaGarra = corBoneco.verificaCorBoneco();
 		if(boss == Const.DARTH_VADER){
 			if(bonecoNaGarra == Const.PRETO){
-				//TODO resgata o darth vader
 				System.out.println("vader amigo");
+				movimento.andarRePID(distBoneco);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
 			}else{
 				System.out.println("leia inimigo");
 				//TODO tira do caminho
@@ -245,7 +201,11 @@ public class ThreadDaProva implements Runnable{
 				//TODO resgata
 			}else{
 				System.out.println("vader inimigo");
-				//TODO tira do caminho
+				movimento.andarRePID(distBoneco);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
 			}
 		}
 
@@ -256,13 +216,24 @@ public class ThreadDaProva implements Runnable{
 
 
 	private void resgataBonecoEsquerda(double distDeVolta){
-		movimento.andarRePID(distDeVolta+0.2);
+		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
+		movimento.andarRePID(distDeVolta+0.4);
 		movimento.linhaReta(0.1, 0, null, null);
 		movimento.girar(-90, null);
 		movimento.andarRePID(0.25);
 		movimento.linhaReta(Const.DIST_MODULO_RESGATE-Const.BUNDA_ROBO, 0, null, null);
 		garra.abreGarra();
-		direcaoDoRoboNoModuloDeInicio = Const.DIREITA;
+		direcaoDoRobo = Const.DIREITA;
+		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
+	}
+
+	private void tiraBonecoEsquerda(){
+		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
+		movimento.girar(-90, null);
+		movimento.linhaReta(0.15, 0, null, null);
+		garra.abreGarra();
+		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
+		direcaoDoRobo = Const.DIREITA;
 	}
 
 }

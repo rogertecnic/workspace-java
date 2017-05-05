@@ -40,5 +40,6 @@ public class Const {
 	public static final double RAIO_CIRCULO = 0.125;
 	
 	public static final double DIST_MODULO_RESGATE =0.5;// 1.5/2; // medido da lateral da arena ate o meio do modulo de inicio
-	public static final int ANGULO_DE_PROCURA = 45; // na beirada do circulo preto, abertura de procura do boss
+	
+	public static final int ANGULO_DE_PROCURA = 35; // na beirada do circulo preto, abertura de procura do boss
 }

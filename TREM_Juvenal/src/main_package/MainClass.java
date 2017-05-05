@@ -26,6 +26,9 @@ public class MainClass {
 		boolean calibrado = false;
 		//Object[] componentes = {rodaE, rodaD, garra,sensorUltrassom,null, null};
 		Object[] componentes = {rodaE,rodaD, garra, sensorUltrassom, corBoneco, corChao};
+		corChao.calibraCor();
+		corChao.getModuloDetectado();
+		
 		corBoneco.calibraCor();
 		
 		 //corBoneco.verificaCorBoneco();
