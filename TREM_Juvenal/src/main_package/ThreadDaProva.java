@@ -99,10 +99,10 @@ public class ThreadDaProva implements Runnable{
 		movimento.andarRe(0.35);
 
 
-		while(jaAndou < 2.63){
+		while(jaAndou != 9999){
 			//Primeiro movimento pela esquerda, anda 1 metro
 			double jaAndouAnt = jaAndou;
-			jaAndou += movimento.linhaReta((2.65/3),Const.SENSOR_US, null, sensorUS);
+			jaAndou += movimento.linhaReta((2.65/3),Const.SENSOR_US, corChao, sensorUS);
 			if(jaAndou < (jaAndouAnt+2.65/3 - 0.01)){ // boneco foi detectado
 				double distBoneco = sensorUS.getDistBoneco();
 				movimento.linhaReta(distBoneco, 0, null, null);
@@ -127,7 +127,7 @@ public class ThreadDaProva implements Runnable{
 			}
 
 			//alinha para o proximo movimento
-			if(jaAndou < 2.63){
+			if(jaAndou != 9999){
 				if( direcaoDoRobo == Const.FRENTE)
 					movimento.girar(-90, null);
 				movimento.andarRe(0.35);
@@ -146,6 +146,172 @@ public class ThreadDaProva implements Runnable{
 		movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
 
 		// procurar boneco no circulo preto
+		int anguloDoBoneco = procuraCirculoPreto();
+
+		// pega o primeiro boss
+		double distBoneco = sensorUS.getDistBoneco();
+		movimento.linhaReta(distBoneco, 0, null, null);
+		garra.fechaGarra();
+		int bonecoNaGarra = corBoneco.verificaCorBoneco();
+		// RESGATE DO LADO DO WADER
+		if(boss == Const.DARTH_VADER){
+			// PEGUEI O PRETO
+			if(bonecoNaGarra == Const.PRETO){
+				System.out.println("vader amigo");
+				movimento.andarRePID(distBoneco+0.1);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				// vai buscar a leia
+				movimento.andarRe(0.15);
+				movimento.girar(90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				anguloDoBoneco = procuraCirculoPreto();
+				// pega o segundo boss
+				distBoneco = sensorUS.getDistBoneco();
+				movimento.linhaReta(distBoneco, 0, null, null);
+				garra.fechaGarra();
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.3);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				movimento.andarRe(0.25);
+				// PEGUEI O BRANCO
+			}else{
+				System.out.println("leia inimigo");
+				movimento.andarRePID(distBoneco+0.1);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO*2+0.05, 0, null, null);
+				movimento.girar(-90, null); // virar de bunda
+				movimento.andarRePID(1.2);
+				movimento.linhaReta(0.1, 0, null, null);
+				movimento.girar(90, null);
+				movimento.andarRePID(0.5);
+				movimento.linhaReta(0.1, 0, null, null);
+				movimento.girar(90, null);
+				// vai buscar o segundo boss
+				garra.abreGarra();
+				movimento.andarRe(0.15);
+				movimento.girar(-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				anguloDoBoneco = procuraCirculoPreto();
+				// pega o segundo boss
+				distBoneco = sensorUS.getDistBoneco();
+				movimento.linhaReta(distBoneco, 0, null, null);
+				garra.fechaGarra();
+				movimento.girar(-anguloDoBoneco+90, null);
+				movimento.andarRe(0.3);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				movimento.andarRe(0.25);
+			}
+			
+		// RESGATE DO LADO DA LEIA
+		}else{
+			if(bonecoNaGarra == Const.BRANCO){
+				System.out.println("leia amigo");
+				movimento.andarRePID(distBoneco+0.1);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO*2+0.05, 0, null, null);
+				movimento.girar(-90, null); // virar de bunda
+				movimento.andarRePID(1.2);
+				movimento.linhaReta(0.1, 0, null, null);
+				movimento.girar(90, null);
+				movimento.andarRePID(0.5);
+				movimento.linhaReta(0.1, 0, null, null);
+				movimento.girar(90, null);
+				garra.abreGarra();
+				// vai buscar o segundo boss
+				movimento.andarRe(0.15);
+				movimento.girar(-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				anguloDoBoneco = procuraCirculoPreto();
+				// pega o segundo boss
+				distBoneco = sensorUS.getDistBoneco();
+				movimento.linhaReta(distBoneco, 0, null, null);
+				garra.fechaGarra();
+				movimento.girar(-anguloDoBoneco+90, null);
+				movimento.andarRe(0.3);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				movimento.andarRe(0.25);
+			}else{
+				System.out.println("vader inimigo");
+				movimento.andarRePID(distBoneco+0.1);
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(-90, null);
+				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				// vai buscar a leia
+				movimento.andarRe(0.15);
+				movimento.girar(90, null);
+				movimento.andarRe(0.25);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				anguloDoBoneco = procuraCirculoPreto();
+				// pega o segundo boss
+				distBoneco = sensorUS.getDistBoneco();
+				movimento.linhaReta(distBoneco, 0, null, null);
+				garra.fechaGarra();
+				movimento.girar(-anguloDoBoneco-90, null);
+				movimento.andarRe(0.3);
+				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
+				movimento.girar(90, null);
+				movimento.linhaReta(0.7-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, Const.SENSORES, corChao, sensorUS);
+				garra.abreGarra();
+				movimento.andarRe(0.25);
+			}
+		}
+
+		victorySong();
+	}
+
+
+	private void resgataBonecoEsquerda(double distDeVolta){
+		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
+		movimento.andarRePID(distDeVolta+0.4);
+		movimento.linhaReta(0.1, 0, null, null);
+		movimento.girar(-90, null);
+		movimento.andarRePID(0.25);
+		movimento.linhaReta(Const.DIST_MODULO_RESGATE-Const.BUNDA_ROBO, 0, null, null);
+		garra.abreGarra();
+		direcaoDoRobo = Const.DIREITA;
+		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
+	}
+
+	private void tiraBonecoEsquerda(){
+		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
+		movimento.girar(-90, null);
+		movimento.linhaReta(0.15, 0, null, null);
+		garra.abreGarra();
+		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
+		direcaoDoRobo = Const.DIREITA;
+	}
+
+	private int procuraCirculoPreto(){
 		int anguloDoBoneco = 0;
 		int tmp = 0;
 		while(tmp < 3){
@@ -177,63 +343,6 @@ public class ThreadDaProva implements Runnable{
 				break;
 			}
 		}
-
-		// pega o primeiro boss
-		double distBoneco = sensorUS.getDistBoneco();
-		movimento.linhaReta(distBoneco, 0, null, null);
-		garra.fechaGarra();
-		int bonecoNaGarra = corBoneco.verificaCorBoneco();
-		if(boss == Const.DARTH_VADER){
-			if(bonecoNaGarra == Const.PRETO){
-				System.out.println("vader amigo");
-				movimento.andarRePID(distBoneco);
-				movimento.girar(-anguloDoBoneco-90, null);
-				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
-				movimento.girar(-90, null);
-				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
-			}else{
-				System.out.println("leia inimigo");
-				//TODO tira do caminho
-			}
-		}else{
-			if(bonecoNaGarra == Const.BRANCO){
-				System.out.println("leia amigo");
-				//TODO resgata
-			}else{
-				System.out.println("vader inimigo");
-				movimento.andarRePID(distBoneco);
-				movimento.girar(-anguloDoBoneco-90, null);
-				movimento.linhaReta(Const.RAIO_CIRCULO+0.05-Const.BUNDA_ROBO, 0, null, null);
-				movimento.girar(-90, null);
-				movimento.linhaReta(0.75-Const.BUNDA_ROBO-Const.RAIO_CIRCULO-Const.FRENTE_ROBO, 0, null, null);
-			}
-		}
-
-		victorySong();
-		Delay.msDelay(10000);
-
+		return anguloDoBoneco;
 	}
-
-
-	private void resgataBonecoEsquerda(double distDeVolta){
-		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
-		movimento.andarRePID(distDeVolta+0.4);
-		movimento.linhaReta(0.1, 0, null, null);
-		movimento.girar(-90, null);
-		movimento.andarRePID(0.25);
-		movimento.linhaReta(Const.DIST_MODULO_RESGATE-Const.BUNDA_ROBO, 0, null, null);
-		garra.abreGarra();
-		direcaoDoRobo = Const.DIREITA;
-		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
-	}
-
-	private void tiraBonecoEsquerda(){
-		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
-		movimento.girar(-90, null);
-		movimento.linhaReta(0.15, 0, null, null);
-		garra.abreGarra();
-		Const.RAIO_ROBO = 0.0646; // ja soltou o boneco
-		direcaoDoRobo = Const.DIREITA;
-	}
-
 }

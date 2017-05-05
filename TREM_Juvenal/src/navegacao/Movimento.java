@@ -52,7 +52,10 @@ public class Movimento {
 		Delay.msDelay(50);
 		boolean condicaoDeParada = false;
 		if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
-		else if(detectaBoneco == Const.SENSOR_COR){}; //TODO fazer a condicao de parada para o sensor de cor do chao
+		else if(detectaBoneco == Const.SENSORES){
+			if(sensorUS.getBonecoDetectado() || sensorChao.getModuloDetectado())
+				condicaoDeParada = true;
+		}
 
 
 		if(Const.ESPACO_DE_ACC  < distancia/2)
@@ -69,13 +72,16 @@ public class Movimento {
 		rodaD.forward();
 
 		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (!condicaoDeParada)){// controle
-			if(detectaBoneco == Const.SENSOR_US && !condicaoDeParada)condicaoDeParada = sensorUS.getBonecoDetectado();
-			else if(detectaBoneco == Const.SENSOR_COR){}; //TODO fazer a condicao de parada para o sensor de cor do chao
+			if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
+			else if(detectaBoneco == Const.SENSORES){
+				if(sensorUS.getBonecoDetectado() || sensorChao.getModuloDetectado())
+					condicaoDeParada = true;
+			}
 
 			Delay.msDelay(Const.dt);
 			SD = (rodaD.getTachoCount() - thetaDinicial)*3.1415/180*Const.RAIO_RODA;
 			SE = (rodaE.getTachoCount() - thetaEinicial)*3.1415/180*Const.RAIO_RODA;
-			
+
 			erroAnt = erro;
 			erro = SD - SE; // erro equivale a diferenca do comprimento dos arcos que cada roda esta fazendo
 			PD = Const.Kp*erro + Const.Kd*(erro - erroAnt)/Const.dt;
@@ -96,6 +102,10 @@ public class Movimento {
 			thetaD = rodaD.getTachoCount();
 			thetaE = rodaE.getTachoCount();
 		}	
+		if(detectaBoneco == Const.SENSORES)
+			if(sensorChao.getModuloDetectado())
+				return 9999;
+
 		return SD+Const.ESPACO_DE_ACC;
 	}
 
@@ -110,10 +120,10 @@ public class Movimento {
 		boolean condicaoDeParada = false;
 		double SD = 0;
 		double SE = 0;
-		
+
 		graus = graus*3.1415/180;
 		double Sgiro = Math.abs(graus*Const.RAIO_ROBO);
-		
+
 		if(sensorUS != null){
 			condicaoDeParada = sensorUS.getBonecoDetectado();
 			resetMotorsBuscaNoGiro();
@@ -127,10 +137,10 @@ public class Movimento {
 			else
 				posicaoDesaceleracao = Sgiro/2;
 		}
-		
+
 		double thetaDinicial = rodaD.getTachoCount();
 		double thetaEinicial = rodaE.getTachoCount();
-		
+
 		if(graus > 0){		 	// anti-horario
 			rodaE.backward();
 			rodaD.forward();
@@ -190,7 +200,7 @@ public class Movimento {
 		rodaE.rotate(-(int)theta, true);
 		rodaD.rotate(-(int)theta);
 	}
-	
+
 	public void andarRePID(double distancia){
 		if(Const.ESPACO_DE_ACC  < distancia/2)
 			posicaoDesaceleracao = distancia-Const.ESPACO_DE_ACC;
@@ -206,7 +216,7 @@ public class Movimento {
 		rodaD.backward();
 
 		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao)){// controle
-		
+
 			Delay.msDelay(Const.dt);
 			SD = (-rodaD.getTachoCount() + thetaDinicial)*3.1415/180*Const.RAIO_RODA;
 			SE = (-rodaE.getTachoCount() + thetaEinicial)*3.1415/180*Const.RAIO_RODA;

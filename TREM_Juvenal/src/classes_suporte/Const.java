@@ -34,6 +34,7 @@ public class Const {
 	
 	public static final int SENSOR_COR = 8;
 	public static final int SENSOR_US = 9;
+	public static final int SENSORES = 91;
 	
 	public static final double BUNDA_ROBO = 0.115;
 	public static final double FRENTE_ROBO = 0.14;

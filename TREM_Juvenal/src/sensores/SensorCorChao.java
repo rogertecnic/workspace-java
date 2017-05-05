@@ -90,18 +90,32 @@ public class SensorCorChao {
 				}
 			}
 		}
-
+		
+//		System.out.printf("%.3f;%.3f;%.3f\n",red[0]*10, red[1]*10, red[2]*10);
+//		Button.ENTER.waitForPressAndRelease();
+//		System.out.println("\n\n\n\n\n\n\n");
+//		System.out.printf("%.3f;%.3f;%.3f\n",green[0]*10, green[1]*10, green[2]*10);
+//		Button.ENTER.waitForPressAndRelease();
+//		System.out.println("\n\n\n\n\n\n\n");
+//		System.out.printf("%.3f;%.3f;%.3f\n",blue[0]*10, blue[1]*10, blue[2]*10);
+//		Button.ENTER.waitForPressAndRelease();
+//		System.out.println("\n\n\n\n\n\n\n");
+		
 		r = (red[1] + red[2])/2; 
 		g = (green[1] + green[2])/2; 
-		b = (blue[1] + blue[2])/2; 
+		b = (blue[1] + blue[2])/2;
 	}
-
-	public void getModuloDetectado(){
+	
+	/**
+	 * verifica se tem um chao colorido em baixo
+	 * @return false se for branco, true se for verde ou vermelho ou preto
+	 */
+	public boolean getModuloDetectado(){
 		while(true){
 			sensorCor.getRGBMode().fetchSample(rgbSample, 0);
-			if(rgbSample[0] > r && rgbSample[1] > g && rgbSample[2] >b){
-				System.out.println(false);
-			} else System.out.println(true);
+			if(rgbSample[2] > b){
+				return false;
+			} else return true;
 		}
 	}
 }
