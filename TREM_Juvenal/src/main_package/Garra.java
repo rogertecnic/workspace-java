@@ -19,7 +19,7 @@ public class Garra {
 		garra.setStallThreshold(10, 200);
 		garra.setSpeed(100);
 		garra.rotate(-8000);
-		System.out.println(garra.isStalled());
+		//System.out.println(garra.isStalled());
 		garra.flt();
 		Delay.msDelay(60);
 		garra.rotate(-4);
@@ -27,10 +27,10 @@ public class Garra {
 	
 	public void fechaGarra(){
 		Const.RAIO_ROBO = 0.065; // pegou boneco pra resgatar
-		garra.setStallThreshold(10, 200);
+		garra.setStallThreshold(20, 200);
 		garra.setSpeed(130);
 		garra.rotate(8000);
-		System.out.println(garra.isStalled());
+		//System.out.println(garra.isStalled());
 		//garra.flt();
 		//Delay.msDelay(60);
 		//garra.rotate(6);

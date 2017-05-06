@@ -47,12 +47,26 @@ public class ThreadDaProva implements Runnable{
 	@Override
 	public void run() {
 		try{
-			Const.RAIO_ROBO = 0.0646; // sem boneco
-			garra.abreGarra();
+			//movimento.linhaReta(0.3, 0, null, null);
+			//Delay.msDelay(1000);
+			//movimento.girar(90, null);
+			//Delay.msDelay(1000);
+			//movimento.andarRe(0.7);
+			//movimento.linhaReta(0.3, 0, null, null);
+			//Const.RAIO_ROBO = 0.0646; // sem boneco
+			//garra.abreGarra();
+			//movimento.testaStall();
+			
+//			movimento.linhaReta(0.1, 0, null, null);
+//			movimento.girar(-90, null);
+//
+			movimento.andarRePID(Const.DIST_MODULO_RESGATE+0.1);
+			movimento.linhaReta(0.1, 0, null, null);
+//			movimento.girar(90, null);
+			movimento.andarRePID(0.35);
+			
+			//procurarEsquerda();
 
-			procurarEsquerda();
-			procurarEsquerda();
-			procurarEsquerda();
 			//System.out.println(movimento.girar(-90, sensorUS));
 			//procurarEsquerda();
 			//garra.abreGarra();
@@ -102,7 +116,7 @@ public class ThreadDaProva implements Runnable{
 		while(jaAndou != 9999){
 			//Primeiro movimento pela esquerda, anda 1 metro
 			double jaAndouAnt = jaAndou;
-			jaAndou += movimento.linhaReta((2.65/3),Const.SENSOR_US, corChao, sensorUS);
+			jaAndou += movimento.linhaReta((2.65/3),Const.SENSORES, corChao, sensorUS);
 			if(jaAndou < (jaAndouAnt+2.65/3 - 0.01)){ // boneco foi detectado
 				double distBoneco = sensorUS.getDistBoneco();
 				movimento.linhaReta(distBoneco, 0, null, null);
@@ -285,7 +299,6 @@ public class ThreadDaProva implements Runnable{
 				movimento.andarRe(0.25);
 			}
 		}
-
 		victorySong();
 	}
 

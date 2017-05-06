@@ -15,30 +15,47 @@ public class Movimento {
 	private double PD = 0;
 	private double erro = 0;
 	private double erroAnt = 0;
+	private boolean motorTravado = false;
 
 
 	public Movimento(Object[] motores){
 		rodaE = (EV3LargeRegulatedMotor) motores[0];
 		rodaD = (EV3LargeRegulatedMotor) motores[1];
 		resetMotors();
+		rodaE.setStallThreshold(5, 10);
+		rodaD.setStallThreshold(5, 10);
 	}
 
 	private void resetMotors(){
+		rodaE.flt();
+		rodaD.flt();
+		motorTravado = false;
 		rodaE.resetTachoCount();
 		rodaD.resetTachoCount();
 		rodaE.setAcceleration((int)(Const.ACC/Const.RAIO_RODA*180/3.1415));
 		rodaD.setAcceleration((int)(Const.ACC/Const.RAIO_RODA*180/3.1415));
 		rodaE.setSpeed((float)(Const.VELOCIDADE_E/Const.RAIO_RODA*180/3.1415));
 		rodaD.setSpeed((float)(Const.VELOCIDADE_D/Const.RAIO_RODA*180/3.1415));
+		PD = 0;
+		erro = 0;
+		erroAnt = 0;
+		Delay.msDelay(50);
 	}
 
 	private void resetMotorsBuscaNoGiro(){
 		rodaE.resetTachoCount();
 		rodaD.resetTachoCount();
+		rodaE.flt();
+		rodaD.flt();
+		motorTravado = false;
 		rodaE.setAcceleration((int)(Const.ACC_GIRO/Const.RAIO_RODA*180/3.1415));
 		rodaD.setAcceleration((int)(Const.ACC_GIRO/Const.RAIO_RODA*180/3.1415));
 		rodaE.setSpeed((float)(Const.VELOCIDADE_GIRO/Const.RAIO_RODA*180/3.1415));
 		rodaD.setSpeed((float)(Const.VELOCIDADE_GIRO/Const.RAIO_RODA*180/3.1415));
+		PD = 0;
+		erro = 0;
+		erroAnt = 0;
+		Delay.msDelay(50);
 	}
 
 	/**
@@ -49,7 +66,7 @@ public class Movimento {
 	 * @return retorna a distancia que ele andou ate parar
 	 */
 	public double linhaReta(double distancia,int detectaBoneco, SensorCorChao sensorChao, UltraSom sensorUS){
-		Delay.msDelay(50);
+		resetMotors();
 		boolean condicaoDeParada = false;
 		if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
 		else if(detectaBoneco == Const.SENSORES){
@@ -71,7 +88,11 @@ public class Movimento {
 		rodaE.forward();
 		rodaD.forward();
 
-		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (!condicaoDeParada)){// controle
+		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && (!condicaoDeParada) && !motorTravado){// controle
+			motorTravado = (rodaE.isStalled() || rodaD.isStalled()? true:false);
+			if(motorTravado){
+				
+			}
 			if(detectaBoneco == Const.SENSOR_US)condicaoDeParada = sensorUS.getBonecoDetectado();
 			else if(detectaBoneco == Const.SENSORES){
 				if(sensorUS.getBonecoDetectado() || sensorChao.getModuloDetectado())
@@ -116,7 +137,6 @@ public class Movimento {
 	 * seja alterada para FALSE o robo para;
 	 */
 	public int girar(double graus, UltraSom sensorUS){
-		Delay.msDelay(50);
 		boolean condicaoDeParada = false;
 		double SD = 0;
 		double SE = 0;
@@ -125,13 +145,14 @@ public class Movimento {
 		double Sgiro = Math.abs(graus*Const.RAIO_ROBO);
 
 		if(sensorUS != null){
-			condicaoDeParada = sensorUS.getBonecoDetectado();
 			resetMotorsBuscaNoGiro();
+			condicaoDeParada = sensorUS.getBonecoDetectado();
 			if(Const.ESPACO_DE_ACC_GIRO_BUSCA < Sgiro/2)
 				posicaoDesaceleracao = Sgiro-Const.ESPACO_DE_ACC_GIRO_BUSCA;
 			else
 				posicaoDesaceleracao = Sgiro/2;
 		} else{
+			resetMotors();
 			if(Const.ESPACO_DE_ACC < Sgiro/2)
 				posicaoDesaceleracao = Sgiro-Const.ESPACO_DE_ACC;
 			else
@@ -148,8 +169,9 @@ public class Movimento {
 			rodaD.backward();
 			rodaE.forward();
 		}
-		System.out.println(!condicaoDeParada);
-		while((SD<posicaoDesaceleracao || SE <posicaoDesaceleracao) && !condicaoDeParada){
+		
+		while((SD<posicaoDesaceleracao || SE <posicaoDesaceleracao) && !condicaoDeParada && !motorTravado){
+			motorTravado = (rodaE.isStalled() || rodaD.isStalled()? true:false);
 			if(sensorUS != null){
 				condicaoDeParada = sensorUS.getBonecoDetectado();
 
@@ -196,12 +218,16 @@ public class Movimento {
 	}
 
 	public void andarRe(double distancia){
+		resetMotors();
 		double theta = distancia/Const.RAIO_RODA*(180/3.141592);
 		rodaE.rotate(-(int)theta, true);
 		rodaD.rotate(-(int)theta);
+		if(rodaE.isStalled() && rodaD.isStalled())
+		System.out.println("travadoes");
 	}
 
 	public void andarRePID(double distancia){
+		resetMotors();
 		if(Const.ESPACO_DE_ACC  < distancia/2)
 			posicaoDesaceleracao = distancia-Const.ESPACO_DE_ACC;
 		else
@@ -215,8 +241,7 @@ public class Movimento {
 		rodaE.backward();
 		rodaD.backward();
 
-		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao)){// controle
-
+		while((SD<posicaoDesaceleracao || SE<posicaoDesaceleracao) && !motorTravado){// controle
 			Delay.msDelay(Const.dt);
 			SD = (-rodaD.getTachoCount() + thetaDinicial)*3.1415/180*Const.RAIO_RODA;
 			SE = (-rodaE.getTachoCount() + thetaEinicial)*3.1415/180*Const.RAIO_RODA;
@@ -225,8 +250,16 @@ public class Movimento {
 			PD = Const.Kp*erro + Const.Kd*(erro - erroAnt)/Const.dt;
 			rodaD.setSpeed((float) ((Const.VELOCIDADE_D - PD)/Const.RAIO_RODA*180/3.1415) );
 			rodaE.setSpeed((float) ((Const.VELOCIDADE_E + PD)/Const.RAIO_RODA*180/3.1415) );
+			motorTravado = ((rodaE.isStalled() || rodaD.isStalled())? true:false);
+			if(motorTravado){
+				rodaE.flt();
+				rodaD.flt();
+				System.out.println("parado");
+				rodaE.forward();
+				rodaD.forward();
+			}
 		}
-
+		motorTravado = false;
 		double thetaD = rodaD.getTachoCount();
 		double thetaE = rodaE.getTachoCount();
 		double thetaDant = 0;
@@ -239,6 +272,38 @@ public class Movimento {
 			thetaEant = thetaE;
 			thetaD = rodaD.getTachoCount();
 			thetaE = rodaE.getTachoCount();
-		}	
+		}
+	}
+	
+	
+	public void testaStall(){
+		resetMotors();
+		rodaE.backward();
+		rodaD.backward();
+		Delay.msDelay(8000);
+		rodaE.setSpeed(200);
+		if(rodaE.isStalled() || rodaD.isStalled()) System.out.println("ta stall");
+		rodaE.flt();
+		rodaD.flt();
+		rodaE.rotate(90,true);
+		rodaD.rotate(90);
+		rodaE.backward();
+		rodaD.backward();
+		Delay.msDelay(8000);
+		if(rodaE.isStalled() || rodaD.isStalled()) System.out.println("ta stall");
+		rodaE.flt();
+		rodaD.flt();
+		rodaE.rotate(90,true);
+		rodaD.rotate(90);
+		rodaE.backward();
+		rodaD.backward();
+		Delay.msDelay(8000);
+		if(rodaE.isStalled() || rodaD.isStalled()) System.out.println("ta stall");
+		rodaE.flt();
+		rodaD.flt();
+		rodaE.rotate(90,true);
+		rodaD.rotate(90);
+		
+		if(!rodaE.isStalled() && !rodaD.isStalled()) System.out.println("nao stall");
 	}
 }
